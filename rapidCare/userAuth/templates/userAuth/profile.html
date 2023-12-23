@@ -1,0 +1,464 @@
+<head>
+    <style>
+        .profile-container {
+            padding-top: 10px;
+            width: 50%;
+            height: 30%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            border-radius: 100%;
+        }
+
+        .profile-info {
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    </style>
+    <script>
+        let toggle = () => {
+            let profileForm = document.getElementById("EditProfile");
+            let hidden = profileForm.getAttribute("hidden");
+            if (hidden) {
+                profileForm.removeAttribute("hidden");
+            } else {
+                profileForm.setAttribute("hidden", "hidden");
+            }
+        }
+    </script>
+</head>
+<!-- Snippet got from https://github.com/CoreyMSchafer/code_snippets/blob/master/Django_Blog/08-Profile-And-Images/django_project/users/templates/users/profile.html -->
+{% extends './base.html' %}
+{% block titleBlock %} {{ user.username }} Profile {% endblock titleBlock %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<div class="container">
+    <div class="main-body">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body" id="editProfileView" style="display: none;">
+                        <div class="d-flex flex-column align-items-center text-center">
+
+                            <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="file" name="img" accept="image/*" class="file-upload-input" id="id_img"
+                                    style="display: none;" onchange="readURL(this)">
+                                <img id="profilePic" class="file-upload-image profile-pic"
+                                    src="{{ user.profile.img.url }}" alt="Admin" width="150">
+                                <hr class="mb-5">
+                                <button class="btn btn-danger" type="button" onclick="changePic()">
+                                    <span>Change Profile Pic</span>
+                                </button>
+                                <button class="btn btn-danger" type="submit" onclick="changeEditProfileView()">
+                                    <span>Save</span>
+                                </button>
+                            </form>
+                            <div class="mt-3">
+                                <h4>{{ userForm.username.value }}</h4>
+                                <p class="text-muted font-size-sm">{{ addresses.0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" id="profileView">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <div style="width: 100%; text-align: end;"><a href="#"
+                                    onclick="changeProfileView()">Edit</a></div>
+                            <img class="profile-pic" src="{{ user.profile.img.url }}">
+                            <hr class="mb-5">
+                            <div class="mt-3">
+                                <h4>{{ userForm.username.value }}</h4>
+                                <p class="text-muted font-size-sm">{{ addresses.0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <h5 class="mb-0 p-2">Transactions</h5>
+                    <hr>
+                    <ul class="list-group list-group-flush">
+                        {% for transaction in transactions %}
+                        {% if forloop.counter < 4 %} <li
+                            class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">Transaction {{ forloop.counter }}</h6>
+                            <a href="{% url 'checkoutDetail' pk=transaction.id %}"><span class="text-secondary">
+                                    #{{ transaction }}</span></a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            {% if forloop.counter > 3 %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="{% url 'checkoutList' %}">
+                                    <h6 class="mb-0">View All</h6>
+                                </a>
+                            </li>
+                            {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div id="editChanges" class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Username</h6>
+                            </div>
+                            <div id="username" class="col-sm-9 text-secondary">
+                                {{ userForm.username.value }}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div id="email" class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{ userForm.email.value }}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Phone</h6>
+                            </div>
+                            <div id="phone" class="col-sm-9 text-secondary">
+                                {{ userForm.phone_number.value }}
+                            </div>
+                        </div>
+                        <hr>
+
+                        {% for address in addresses %}
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Address {{ forloop.counter }}</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{ address }}
+                            </div>
+                        </div>
+                        <hr>
+                        {% endfor %}
+
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button class="btn btn-danger" onclick="edit()">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="{% url 'profile' %}" method="post">
+                        {% csrf_token %}
+                        <div id="saveChanges" class="card-body" style="display: none;">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Username</h6>
+                                </div>
+                                <div id="username" class="col-sm-9 text-secondary">
+                                    {{ userForm.username|attr:"placeholder:Username" }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div id="email" class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ userForm.email|attr:"placeholder:Email: a@a.com" }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Phone</h6>
+                                </div>
+                                <div id="phone" class="col-sm-9 text-secondary">
+                                    {{ userForm.phone_number|attr:"placeholder:Phone: +9715XXXXXXXX" }}
+                                </div>
+                            </div>
+                            <hr>
+                            {% for address in addresses %}
+                            <div class="row address">
+                                <div class="col-sm-3 d-inline align-middle">
+                                    <h6 class="mb-0">Address {{ forloop.counter }}</h6>
+                                </div>
+                                <div class="col-sm-7 text-secondary">
+                                    <a href="{% url 'addressUpdate' pk=address.id %}">{{ address }}</a>
+                                </div>
+                                <div class="col-sm-2 text-secondary">
+                                    <div class="row-sm-1">
+                                        <button class="removeAddress-btn"
+                                            name="removeAddress-{{ address.id }}">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            {% endfor %}
+
+                            {% if addresses|length < 5 %} <div class="row">
+                                <div class="col-sm-4"><a href="{% url 'addressCreate' %}">
+                                        <button type="button" class="addAddress">
+                                            Add Address
+                                        </button>
+                                    </a></div>
+                        </div>
+                        <hr>
+                        {% endif %}
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button class="btn btn-danger" type="submit" onclick="save()">Save</button>
+                            </div>
+                        </div>
+                </div>
+                </form>
+            </div>
+            <form id="subscriptionChanges" action="{% url 'profile' %}" method="post">
+            {% csrf_token %}
+            <div class="row gutters-sm">
+                <div class="col-sm-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row p-2">
+                                <h6 class="d-flex align-items-start mb-3"><i
+                                        class="material-icons text-info mr-2">Garden Maintenance Subscriptions</i>
+                                </h6>
+                            </div>
+                            {% for sub in subscriptions %}
+                            {% if sub.serviceType == 'grdn' %}
+                            <div class="row p-2" style="border-top: 2px solid rgba(0, 0, 0, 0.125);">
+                                <div class="col">
+                                    <div class="row"><small>{{ sub.description }}</small></div>
+                                    <div class="row-cols-2 mt-5">
+                                        <button type="submit" name="removeSub-{{ sub.id }}" class="btn btn-danger" onclick="removesub()">Remove</button><br><br>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="row">
+                                        {% if not sub.paused %}
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="flexSwitchCheck" onchange="suboption(this)">
+                                            <label class="form-check-label" for="flexSwitchCheck"><i
+                                                    class="fa fa-refresh" aria-hidden="true"></i>
+                                                Pause</label>
+                                            <input type="hidden" name="pauseSub-{{ sub.id }}" disabled>
+                                        </div>
+                                        {% else %}
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" name="pauseSub-{{ sub.id }}" role="switch"
+                                                id="flexSwitchCheckChecked" onchange="suboption(this)" checked>
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"><i
+                                                    class="fa fa-refresh" aria-hidden="true"></i>
+                                                Pause</label>
+                                            <input type="hidden" name="pauseSub-{{ sub.id }}" disabled>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row">
+                                        {% if not sub.autoRenew %}
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="flexSwitchCheck" onchange="suboption(this)">
+                                            <label class="form-check-label" for="flexSwitchCheck"><i
+                                                    class="fa fa-refresh" aria-hidden="true"></i>
+                                                Auto-Renew</label>
+                                            <input type="hidden" name="renewSub-{{ sub.id }}" disabled>
+                                        </div>
+                                        {% else %}
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="flexSwitchCheckChecked" onchange="suboption(this)" checked>
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"><i
+                                                    class="fa fa-refresh" aria-hidden="true"></i>
+                                                Auto-Renew</label>
+                                            <input type="hidden" name="renewSub-{{ sub.id }}" disabled>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- <div class="progress mb-3" style="height: 5px">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"
+                                    aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-3 h-auto">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row">
+                                <h6 class="d-flex align-items-center mb-3"><i
+                                        class="material-icons text-info mr-2">Car Wash Subscriptions</i>
+                                </h6>
+                            </div>
+                            {% for subs in subscriptions %}
+                                {% if sub.serviceType == 'cwsh' %}
+                                <div class="row p-2" style="border-top: 2px solid rgba(0, 0, 0, 0.125);">
+                                    <div class="col">
+                                        <div class="row"><small>{{ sub.description }}</small></div>
+                                        <div class="row-cols-2 mt-5">
+                                            <button type="submit" name="removeSub-{{ sub.id }}" class="btn btn-danger" onclick="removesub()">Remove</button><br><br>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            {% if not sub.paused %}
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                    id="flexSwitchCheck" onchange="suboption(this)">
+                                                <label class="form-check-label" for="flexSwitchCheck"><i
+                                                        class="fa fa-refresh" aria-hidden="true"></i>
+                                                    Pause</label>
+                                                <input type="hidden" name="pauseSub-{{ sub.id }}" disabled>
+                                            </div>
+                                            {% else %}
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="pauseSub-{{ sub.id }}" role="switch"
+                                                    id="flexSwitchCheckChecked" onchange="suboption(this)" checked>
+                                                <label class="form-check-label" for="flexSwitchCheckChecked"><i
+                                                        class="fa fa-refresh" aria-hidden="true"></i>
+                                                    Pause</label>
+                                                <input type="hidden" name="pauseSub-{{ sub.id }}" disabled>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="row">
+                                            {% if not sub.autoRenew %}
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                    id="flexSwitchCheck" onchange="suboption(this)">
+                                                <label class="form-check-label" for="flexSwitchCheck"><i
+                                                        class="fa fa-refresh" aria-hidden="true"></i>
+                                                    Auto-Renew</label>
+                                                <input type="hidden" name="renewSub-{{ sub.id }}" disabled>
+                                            </div>
+                                            {% else %}
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                    id="flexSwitchCheckChecked" onchange="suboption(this)" checked>
+                                                <label class="form-check-label" for="flexSwitchCheckChecked"><i
+                                                        class="fa fa-refresh" aria-hidden="true"></i>
+                                                    Auto-Renew</label>
+                                                <input type="hidden" name="renewSub-{{ sub.id }}" disabled>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            <!-- <div class="progress mb-3" style="height: 5px">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"
+                                    aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row">
+                                <h6 class="d-flex align-items-center mb-3"><i
+                                        class="material-icons text-info mr-2">House Keeping Subscriptions</i>
+                                </h6>
+                            </div>
+                            {% for sub in subscriptions %}
+                                {% if sub.serviceType == 'hskp' %}
+                                <div class="row p-2" style="border-top: 2px solid rgba(0, 0, 0, 0.125);">
+                                    <div class="col">
+                                        <div class="row"><small>{{ sub.description }}</small></div>
+                                        <div class="row-cols-2 mt-5">
+                                            <button type="submit" name="removeSub-{{ sub.id }}" class="btn btn-danger" onclick="removesub()">Remove</button><br><br>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            {% if not sub.paused %}
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                    id="flexSwitchCheck" onchange="suboption(this)">
+                                                <label class="form-check-label" for="flexSwitchCheck"><i
+                                                        class="fa fa-refresh" aria-hidden="true"></i>
+                                                    Pause</label>
+                                                <input type="hidden" name="pauseSub-{{ sub.id }}" disabled>
+                                            </div>
+                                            {% else %}
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="pauseSub-{{ sub.id }}" role="switch"
+                                                    id="flexSwitchCheckChecked" onchange="suboption(this)" checked>
+                                                <label class="form-check-label" for="flexSwitchCheckChecked"><i
+                                                        class="fa fa-refresh" aria-hidden="true"></i>
+                                                    Pause</label>
+                                                <input type="hidden" name="pauseSub-{{ sub.id }}" disabled>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="row">
+                                            {% if not sub.autoRenew %}
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                    id="flexSwitchCheck" onchange="suboption(this)">
+                                                <label class="form-check-label" for="flexSwitchCheck"><i
+                                                        class="fa fa-refresh" aria-hidden="true"></i>
+                                                    Auto-Renew</label>
+                                                <input type="hidden" name="renewSub-{{ sub.id }}" disabled>
+                                            </div>
+                                            {% else %}
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                    id="flexSwitchCheckChecked" onchange="suboption(this)" checked>
+                                                <label class="form-check-label" for="flexSwitchCheckChecked"><i
+                                                        class="fa fa-refresh" aria-hidden="true"></i>
+                                                    Auto-Renew</label>
+                                                <input type="hidden" name="renewSub-{{ sub.id }}" disabled>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            <!-- <div class="progress mb-3" style="height: 5px">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"
+                                    aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+</div>
+</div>
+
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock content %}

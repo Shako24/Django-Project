@@ -1,0 +1,10 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<h1>Email Page</h1>
+<form action="{% url 'email' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Send</button>
+</form>
+{% endblock content %}

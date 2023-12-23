@@ -1,0 +1,73 @@
+<!-- https://codepen.io/krisantuswanandi/pen/KxrgeZ -->
+{% extends './base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/Contact_us.css' %}">
+
+<div class="background">
+    <div class="container">
+      <div class="screen">
+        <div class="screen-header">
+          <div class="screen-header-left">
+            <div class="screen-header-button close"></div>
+            <div class="screen-header-button maximize"></div>
+            <div class="screen-header-button minimize"></div>
+          </div>
+          <div class="screen-header-right">
+            <div class="screen-header-ellipsis"></div>
+            <div class="screen-header-ellipsis"></div>
+            <div class="screen-header-ellipsis"></div>
+          </div>
+        </div>
+        <div class="screen-body">
+          <div class="screen-body-item left">
+            <div class="app-title">
+              <span>CONTACT</span>
+              <span>US</span>
+            </div>
+            <div class="app-contact">CONTACT INFO : +971 52 913 6867</div>
+          </div>
+          <div class="screen-body-item">
+            <div class="app-form">
+              <form action="{% url 'contact_us' %}" method="post">
+                {% csrf_token %}
+                {% if user.is_authenticated %}
+                <div class="app-form-group">
+                  <input class="app-form-control" placeholder="NAME" value="{{ user.username }}" name="name">
+                </div>
+                <div class="app-form-group">
+                  <input class="app-form-control" placeholder="EMAIL" value="{{ user.email }}" name="email">
+                </div>
+                <div class="app-form-group">
+                  <input class="app-form-control" placeholder="CONTACT NO" value="{{ user.phone_number }}" name="phone">
+                </div>
+                {% else %}
+                <div class="app-form-group">
+                  <input class="app-form-control" placeholder="NAME" name="name">
+                </div>
+                <div class="app-form-group">
+                  <input class="app-form-control" placeholder="EMAIL" name="email">
+                </div>
+                <div class="app-form-group">
+                  <input class="app-form-control" placeholder="CONTACT NO" name="phone">
+                </div>
+                {% endif %}
+                <div class="app-form-group message">
+                  <input class="app-form-control" placeholder="MESSAGE" name="msg">
+                </div>
+                <div class="app-form-group buttons">
+                  <button type="submit" class="app-form-button">SEND</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+{% endblock content %}

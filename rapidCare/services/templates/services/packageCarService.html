@@ -1,0 +1,140 @@
+{% extends 'services/car_wash.html' %}
+{% load static %}
+{% block carservice %}
+
+<link rel="stylesheet" href="{% static 'css/packageCarService.css' %}">
+
+<form id="carpackage" action="{% url 'packageCarWash' %}" method="post">
+    {% csrf_token %}
+    <fieldset class="p-5">
+        <div class="container">
+            <div class="col">
+                <div class="row justify-content-start mb-5 gap-3">
+                    <div class="col-2 col-lg-1"><span class="border border-danger rounded-circle bg-danger p-3 text-light">
+                            1/3
+                        </span></div>
+                    <div class="col-10">
+                        <h1>Vehicle Type</h1>
+                        <h2 class="text-secondary">Select the vehicle type below</h2>
+                    </div>
+                </div>
+                <div class="row justify-content-center gap-4">
+                    <div class="d-flex car-select" data-value="Sedan">
+                        <span class="icon-sedan-car"></span>
+                        <span>Sedan</span>
+                    </div>
+                    <div class="d-flex car-select" data-value="SUV">
+                        <span class="icon-suv-car"></span>
+                        <span>SUV</span>
+                    </div>
+                    <input type="hidden" name="car_select" id="car_select" required>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="p-5">
+        <div class="container">
+            <div class="col">
+                <div class="row justify-content-start mb-5 gap-3">
+                    <div class="col-2 col-lg-1"><span class="border border-danger rounded-circle bg-danger p-3 text-light">
+                            2/3
+                        </span></div>
+                    <div class="col-10">
+                        <h1>Car Wash Packages</h1>
+                        <h2 class="text-secondary">Which package is best for your Vehicle</h2>
+                    </div>
+                </div>
+                <div class="d-flex flex-column flex-xl-row gap-3 mx-sm-5 justify-content-center">
+                    <div class="col p-3 text-center rounded-2" style="box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);">
+                        <h1 class="w-100 pb-2">Basic Exterior Wash</h1>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <button type="button"
+                                class="wash-btn wash-btn-minus btn btn-lg btn-light rounded-circle border border-1 border-secondary"
+                                onclick=""><i class="fa fa-minus"></i></button>
+                            <input type="text" class="wash-input" name="basicExteriorWash" id="basicExteriorWash"
+                                value='2'>
+                            <button type="button"
+                                class="wash-btn wash-btn-plus btn btn-lg btn-light rounded-circle border border-1 border-secondary"><i
+                                    class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="col p-3 text-center rounded-2" style="box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);">
+                        <h1 class="w-100 pb-2">Interior Cleaning</h1>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <button type="button"
+                                class="wash-btn wash-btn-minus btn btn-lg btn-light rounded-circle border border-1 border-secondary"><i
+                                    class="fa fa-minus"></i></button>
+                            <input id="interiorCleaning" type="text" class="wash-input" value="0"
+                                name="interiorCleaning">
+                            <button type="button"
+                                class="wash-btn wash-btn-plus btn btn-lg btn-light rounded-circle border border-1 border-secondary"><i
+                                    class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <input class="btn btn-primary" type="submit" value="next" style="position: fixed; bottom: 200px; right: 50px;"> -->
+    </fieldset>
+
+</form>
+
+<section class="p-5">
+    <div class="container">
+        <div class="col">
+            <div class="row justify-content-start mb-5 gap-3">
+                <div class="col-2 col-lg-1"><span class="border border-danger rounded-circle bg-danger p-3 text-light">
+                        3/3
+                    </span></div>
+                <div class="col-10">
+                    <h1>Order Summary</h1>
+                    <h2 class="text-secondary">Preview Your Order</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-8">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Option</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Car Type</td>
+                                <td class="review-table" id="table-val-1"></td>
+                            </tr>
+                            <tr>
+                                <td>Exterior Wash</td>
+                                <td class="review-table" id="table-val-2"></td>
+                            </tr>
+                            <tr>
+                                <td>Interior Cleaning</td>
+                                <td class="review-table" id="table-val-3"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row justify-content-end align-self-end mx-3">
+    <button onclick="next()" class="next" >
+        NEXT
+    </button>
+</div>
+
+<script>
+    function next() {
+        $('#carpackage').submit();
+    }
+</script>
+
+
+
+<script src="{% static 'js/packageCarService.js' %}"></script>
+{% endblock carservice %}

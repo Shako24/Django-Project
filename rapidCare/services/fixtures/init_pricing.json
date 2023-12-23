@@ -1,0 +1,128 @@
+[
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "garden-lite",
+            "price": 431
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "garden-lite-plus",
+            "price": 719
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "garden-premium",
+            "price": 1000
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields": {
+            "name": "interiorCleaning",
+            "price": 35
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "BasicExteriorWithinteriorCleaning",
+            "price": 50
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "engineDetailing",
+            "price": 30
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "basicExteriorWash",
+            "price": 30
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "exteriorWashWithWax",
+            "price": 70
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "superDirtyExteriorWash",
+            "price": 40
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "interiorCleaningSUV",
+            "price": 40
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "BasicExteriorWithinteriorCleaningSUV",
+            "price": 60
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "engineDetailingSUV",
+            "price": 30
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "basicExteriorWashSUV",
+            "price": 40
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "exteriorWashWithWaxSUV",
+            "price": 80
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "superDirtyExteriorWashSUV",
+            "price": 50
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "hskp:withSupplies",
+            "price": 38.5
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "hskp:withoutSupplies",
+            "price": 33
+        }
+    },
+    {
+        "model": "services.Pricing",
+        "fields":{
+            "name": "vppi:carmaintenance",
+            "price": 400
+        }
+    }
+]

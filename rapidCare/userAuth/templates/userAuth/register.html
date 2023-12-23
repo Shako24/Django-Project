@@ -1,0 +1,35 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+
+<div style="display: block; ">
+    <form class="register_form_div" action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="form_field">
+            <label for="id_username">Enter the username: </label>
+            {{ form.username }}
+        </div>
+        <div class="form_field">
+            <label for="id_username">Enter the phone number: </label>
+            {{ form.phone_number }}
+        </div>
+        <div class="form_field">
+            <label for="id_username">Enter the email: </label>
+            {{ form.email }}
+        </div>
+        <div class="form_field">
+            <label for="id_username">Enter the password: </label>
+            {{ form.password1 }}
+        </div>
+        <div class="form_field">
+            <label for="id_username">Re-type the username: </label>
+            {{ form.password2 }}
+        </div>
+        <button type="submit">Register</button>
+        
+    </form>
+</div>
+
+    {% endblock content %}

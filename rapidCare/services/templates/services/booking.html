@@ -1,0 +1,1130 @@
+{% extends 'userAuth/base.html' %} {% load static %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/booking.css' %}" />
+
+<section class="mt-5">
+  <div class="container">
+    <h1 class="text-black">Booking Page</h1>
+    {% if service.package == 'one-time' %}
+    <h2 class="text-secondary">Choose your preferred service date and time</h2>
+    {% elif service.package == 'subscription' %}
+    <h2 class="text-secondary">
+      Select your preferred service time
+    </h2>
+    <h3 class="text-secondary">
+      (Choose {{ numOfDays }} time slots for your booking)
+    </h3>
+    {% endif %}
+  </div>
+</section>
+
+{% if service.package == 'one-time' %}
+<div id="one-time">
+  <section class="p-sm-5">
+    <div class="container">
+      <div class="row py-3">
+        <div class="col-2 d-flex justify-content-center">
+          <span
+            id="datePrev"
+            class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3"
+            onclick="datePrev()"
+            ><i class="fa-solid fa-arrow-left-long"></i
+          ></span>
+        </div>
+        <div
+          class="col-8 d-flex align-items-center justify-content-center gap-4"
+        >
+          <span
+            id="prevMonth"
+            class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3"
+            onclick="prevMonth()"
+            ><i class="fa-solid fa-arrow-left-long"></i
+          ></span>
+          <span>{{ days.0.0 | date:"F" }}</span>
+          <span
+            id="nextMonth"
+            class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3"
+            onclick="nextMonth()"
+            ><i class="fa-solid fa-arrow-right-long"></i
+          ></span>
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+          <span
+            id="dateNext"
+            class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3"
+            onclick="dateNext()"
+            ><i class="fa-solid fa-arrow-right-long"></i
+          ></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-5">
+    <div class="container justify-content-center">
+      <form
+        id="bookingForm"
+        action="{% url 'booking' pk=service.id %}"
+        method="post"
+        class="row justify-content-center"
+      >
+        {% csrf_token %}
+        <table class="table table-bordered w-75">
+          <thead>
+            <tr id="days-header">
+              {% for day in days %} 
+              {% if forloop.counter0 < 7 %}
+              {% if forloop.counter0 < 2 %}
+              <th
+                scope="col"
+                class="position-relative p-3 d-table-cell"
+              >
+              {% endif %}
+              {% if forloop.counter0 == 2 %}
+              <th
+                scope="col"
+                class="position-relative p-3 d-none d-sm-table-cell"
+              >
+              {% endif %}
+              {% if forloop.counter0 == 3 %}
+              <th
+                scope="col"
+                class="position-relative p-3 d-none d-md-table-cell"
+              >
+              {% endif %}
+              {% if forloop.counter0 == 4 %}
+              <th
+                scope="col"
+                class="position-relative p-3 d-none d-lg-table-cell"
+              >
+              {% endif %}
+              {% if forloop.counter0 == 5 %}
+              <th
+                scope="col"
+                class="position-relative p-3 d-none d-xl-table-cell"
+              >
+              {% endif %}
+              {% if forloop.counter0 == 6 %}
+              <th
+                scope="col"
+                class="position-relative p-3 d-none d-xxl-table-cell"
+              >
+              {% endif %}
+                <!-- <div class="p-3 position-relative w-100 h-100"> -->
+                {% if forloop.first %}
+                <span
+                  class="border border-1 p-2 rounded-circle fw-semibold fs-4"
+                  style="background-color: red; color: white"
+                >
+                  {{ day.0 | date:"d" }}
+                </span>
+                {% else %}
+                <span
+                  class="border border-1 p-2 rounded-circle fw-semibold fs-4"
+                >
+                  {{ day.0 | date:"d" }}
+                </span>
+                {% endif %}
+                <span
+                  style="
+                    position: absolute;
+                    top: 0;
+                    right: 0px;
+                    font-weight: 500;
+                    color: #555;
+                  "
+                >
+                  {{ day.0 | date:"D" }}
+                </span>
+                <!-- </div> -->
+              </th>
+              {% endif %}
+              {% if forloop.counter0 >= 7 %}
+              <th scope="col" class="d-none">
+                  {% if forloop.first %}
+                <span
+                  class="border border-1 p-2 rounded-circle fw-semibold fs-4"
+                  style="background-color: red; color: white"
+                >
+                  {{ day.0 | date:"d" }}
+                </span>
+                {% else %}
+                <span
+                  class="border border-1 p-2 rounded-circle fw-semibold fs-4"
+                >
+                  {{ day.0 | date:"d" }}
+                </span>
+                {% endif %}
+                  <span
+                    style="
+                      position: absolute;
+                      top: 0;
+                      right: 10px;
+                      font-weight: 500;
+                      color: #555;
+                    "
+                  >
+                    {{ day.0 | date:"D" }}
+                  </span>
+              </th>
+              {% endif %} 
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="days-dates">
+              {% for day in days %}
+              {% if forloop.counter0 < 7 %}
+              {% if forloop.counter0 < 2 %}
+              <td
+                scope="col"
+                class="text-center mx-5 d-table-cell"
+              >
+              {% endif %}
+              {% if forloop.counter0 == 2 %}
+              <td
+                scope="col"
+                class="text-center mx-5 d-none d-sm-table-cell"
+              >
+              {% endif %}
+              {% if forloop.counter0 == 3 %}
+              <td
+                scope="col"
+                class="text-center mx-5 d-none d-md-table-cell"
+              >
+              {% endif %}
+              {% if forloop.counter0 == 4 %}
+              <td
+                scope="col"
+                class="text-center mx-5 d-none d-lg-table-cell"
+              >
+              {% endif %}
+              {% if forloop.counter0 == 5 %}
+              <td
+                scope="col"
+                class="text-center mx-5 d-none d-xl-table-cell"
+              >
+              {% endif %}
+              {% if forloop.counter0 == 6 %}
+              <td
+                scope="col"
+                class="text-center mx-5 d-none d-xxl-table-cell"
+              >
+              {% endif %}
+              
+                <div class="d-flex justify-content-center">
+                  <input
+                    type="hidden"
+                    class="startDate"
+                    name="startDate"
+                    value="{{ day.0 | date:'Y-m-d' }}"
+                    disabled
+                  />
+                  <ul class="list-group w-75 pt-2">
+                    {% for key, value in day.1.items %} 
+                    {% if value < maxServiceTimes %}
+                    <li
+                      id="{{ key }}"
+                      value="{{ key }}"
+                      class="timeList list-group-item rounded-5 mb-3"
+                      onclick="timeList(this)"
+                    >
+                      {{ key }}:00
+                    </li>
+                    {% endif %} 
+                    {% endfor %}
+                  </ul>
+                </div>
+              </td>
+              {% endif %} 
+              {% if forloop.counter0 >= 7 %}
+              <td scope="col" class="text-center mx-5 d-none">
+                <div class="d-flex justify-content-center">
+                  <input
+                    type="hidden"
+                    class="startDate"
+                    name="startDate"
+                    value="{{ day.0 | date:'Y-m-d' }}"
+                    disabled
+                  />
+
+                  <ul class="list-group w-75 pt-2">
+                    {% for key, value in day.1.items %} 
+                    {% if value < maxServiceTimes %}
+                    <li
+                      id="{{ key }}"
+                      value="{{ key }}"
+                      class="timeList list-group-item rounded-5 mb-3"
+                      onclick="timeList(this)"
+                    >
+                      {{ key }}:00
+                    </li>
+                    {% endif %} 
+                    {% endfor %}
+                  </ul>
+                </div>
+              </td>
+              {% endif %}
+              {% endfor %}
+            </tr>
+          </tbody>
+        </table>
+        <input id="oneTimeBooking" type="hidden" name="onetimings" />
+      </form>
+    </div>
+  </section>
+</div>
+{% endif %}
+
+{% if service.package == 'subscription' %}
+<section class="p-5">
+  <div class="d-flex justify-content-between">
+    <span
+      id="dayNext"
+      class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3"
+      onclick="dayNext()"
+      ><i class="fa-solid fa-arrow-right-long"></i
+    ></span>
+    <span
+      id="dayNext"
+      class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3"
+      onclick="dayNext()"
+      ><i class="fa-solid fa-arrow-right-long"></i
+    ></span>
+  </div>
+</section>
+<section class="p-5">
+  <div class="mx-5 justify-content-center">
+    <form
+      id="bookingForm"
+      action="{% url 'booking' pk=service.id %}"
+      method="post"
+      class="row justify-content-center"
+    >
+      {% csrf_token %}
+      <table class="table table-bordered w-75">
+        <thead>
+          <tr id="weekDays-header">
+            {% for day in weekDays %}
+            {% if forloop.counter0 < 2 %}
+            <th
+              scope="col"
+              class="d-table-cell"
+            >
+            {% endif %}
+            {% if forloop.counter0 == 2 %}
+            <th
+              scope="col"
+              class="d-none d-sm-table-cell"
+            >
+            {% endif %}
+            {% if forloop.counter0 == 3 %}
+            <th
+              scope="col"
+              class="d-none d-md-table-cell"
+            >
+            {% endif %}
+            {% if forloop.counter0 == 4 %}
+            <th
+              scope="col"
+              class="d-none d-lg-table-cell"
+            >
+            {% endif %}
+            {% if forloop.counter0 == 5 %}
+            <th
+              scope="col"
+              class="d-none d-xl-table-cell"
+            >
+            {% endif %}
+            {% if forloop.counter0 == 6 %}
+            <th
+              scope="col"
+              class="d-none d-xxl-table-cell"
+            >
+            {% endif %}
+              <div class="p-3 position-relative text-center">
+                <span
+                  class="text-capitalize"
+                  style="font-weight: 500; color: #555"
+                >
+                  {{ day.0 }}
+                </span>
+              </div>
+            </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="weekDays-dates">
+            {% for day in weekDays %}
+            {% if forloop.counter0 < 2 %}
+            <td
+              scope="col"
+              class="text-center mx-5 d-table-cell"
+            >
+            {% endif %}
+            {% if forloop.counter0 == 2 %}
+            <td
+              scope="col"
+              class="text-center mx-5 d-none d-sm-table-cell"
+            >
+            {% endif %}
+            {% if forloop.counter0 == 3 %}
+            <td
+              scope="col"
+              class="text-center mx-5 d-none d-md-table-cell"
+            >
+            {% endif %}
+            {% if forloop.counter0 == 4 %}
+            <td
+              scope="col"
+              class="text-center mx-5 d-none d-lg-table-cell"
+            >
+            {% endif %}
+            {% if forloop.counter0 == 5 %}
+            <td
+              scope="col"
+              class="text-center mx-5 d-none d-xl-table-cell"
+            >
+            {% endif %}
+            {% if forloop.counter0 == 6 %}
+            <td
+              scope="col"
+              class="text-center mx-5 d-none d-xxl-table-cell"
+            >
+            {% endif %}
+              <div class="d-flex justify-content-center">
+                <input
+                  type="checkbox"
+                  name="{{ day.0 }}"
+                  style="display: none"
+                />
+                <ul class="list-group w-75 pt-2">
+                  {% for key, value in day.1.items %}
+                  {% if value %}
+                  <li
+                    id="{{ key }}"
+                    value="{{ key }}"
+                    class="sub-timeList list-group-item rounded-5 mb-3"
+                  >
+                    {{ key }}:00
+                  </li>
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+                <input
+                  id="{{ day.0 }}timings"
+                  type="hidden"
+                  name="{{ day.0 }}timings"
+                  value="0"
+                />
+              </div>
+            </td>
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</section>
+{% endif %}
+
+<!-- Order Summary -->
+<section class="mx-5">
+  <div class="container d-flex justify-content-center">
+    <div class="row booking-summary">
+      <div
+        class="col align-items-center text-end border border-1 border-secondary m-4 p-3 position-relative"
+      >
+        <i
+          class="fa-light fa-calendar-lines"
+          style="
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+          "
+        ></i>
+        <input
+          id="appointmentDate"
+          class="h5 w-100 border border-0"
+          style="
+            font-size: larger;
+            font-weight: 500;
+            color: red;
+            text-align: end;
+          "
+          value="?"
+        />
+        <span class="summary-span">Your Appointment Date</span>
+      </div>
+      <div
+        class="col align-items-center text-end border border-1 border-secondary m-4 p-3 position-relative"
+      >
+        <i
+          class="fa-light fa-calendar-lines"
+          style="
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+          "
+        ></i>
+        <input
+          id="appointmentTime"
+          class="h5 w-100 border border-0"
+          style="
+            font-size: larger;
+            font-weight: 500;
+            color: red;
+            text-align: end;
+          "
+          value="?"
+        />
+        <span class="summary-span">Your Appointment Time</span>
+      </div>
+      <div class="w-100"></div>
+      <div class="col text-end border border-1 border-secondary m-4 p-3">
+        <i class="fas fa-cart-circle-check"></i
+        ><input
+          class="h5 w-100 border border-0"
+          style="
+            font-size: larger;
+            font-weight: 500;
+            color: red;
+            text-align: end;
+          "
+          value="AED {{ service.price }}"
+        />
+        <span class="summary-span">Total Price</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="mx-5">
+  <div class="container d-flex justify-content-center">
+    <button
+      class="btn btn-outline-danger border rounded-5"
+      onclick="$('#bookingForm').submit()"
+    >
+      Proceed to Cart
+    </button>
+  </div>
+</section>
+
+<script src="{% static 'js/booking.js' %}"></script>
+<script>
+
+  startDay = 0
+  endDay = 7
+
+  maxBookings = {{ numOfDays }};
+
+  console.log('max bookings are', maxBookings)
+
+  $(".sub-timeList").click(function () {
+
+      if ($(this).hasClass('time-active')) {
+
+          $(this).removeClass("time-active");
+
+      } else if ($('.time-active').length < maxBookings) {
+
+          $(this).parent().find(".sub-timeList").removeClass("time-active");
+
+          $(this).addClass("time-active");
+
+          $(this).parent().parent().find("input[type='checkbox']").prop('checked', true);
+
+          $(this).parent().parent().find('input[type="hidden"]').val($(this).val());
+      }
+  });
+
+  function dayNext() {
+
+    var elementHeader = $('#weekDays-header').children().eq(startDay);
+    var elementHeaderClass = $(elementHeader).attr('class');
+
+    var elementDates = $('#weekDays-dates').children().eq(startDay);
+    var elementDatesClass = $(elementDates).attr('class');
+
+    for (let index = startDay+1; index < startDay+8; index++) {
+      
+      var nextIndex = index;
+
+      if (nextIndex >= endDay) {
+        nextIndex = nextIndex - endDay;
+      }
+
+      // Header Function
+      var nextElementHeader = $('#weekDays-header').children().eq(nextIndex);
+      var nextElementHeaderClass = $(nextElementHeader).attr('class')
+
+      $(nextElementHeader).removeClass();
+      $(nextElementHeader).addClass(elementHeaderClass);
+
+      elementHeaderClass = nextElementHeaderClass;
+
+      // Dates Function
+      var nextElementDates = $('#weekDays-dates').children().eq(nextIndex);
+      var nextElementDatesClass = $(nextElementDates).attr('class')
+
+      $(nextElementDates).removeClass();
+      $(nextElementDates).addClass(elementDatesClass);
+
+      elementDatesClass = nextElementDatesClass;
+
+      
+    }
+
+    startDay += 1;
+
+    if (startDay > endDay) {
+      startDay = 0;
+    }
+
+    console.log(startDay)
+
+  }
+
+
+</script>
+<script>
+      pages = {{ days | length }};
+      console.log(pages)
+      var startindex = 0
+      var endindex = 7
+
+      pageNumber();
+
+      function dateNext() {
+          startindex += 1;
+          endindex += 1;
+          pageNumber();
+          $('#days-header th').slice().removeClass()
+          $('#days-header th').slice().addClass('d-none')
+          $('#days-header th').slice(startindex, endindex).removeClass()
+          $('#days-header th').slice(startindex, startindex+2).addClass('position-relative p-3 d-table-cell')
+          $('#days-header th').slice(startindex+2, startindex+3).addClass('position-relative p-3 d-none d-sm-table-cell')
+          $('#days-header th').slice(startindex+3, startindex+4).addClass('position-relative p-3 d-none d-md-table-cell')
+          $('#days-header th').slice(startindex+4, startindex+5).addClass('position-relative p-3 d-none d-lg-table-cell')
+          $('#days-header th').slice(startindex+5, startindex+6).addClass('position-relative p-3 d-none d-xl-table-cell')
+          $('#days-header th').slice(startindex+6, startindex+7).addClass('position-relative p-3 d-none d-xxl-table-cell')
+
+          $('#days-dates td').slice().removeClass()
+          $('#days-dates td').slice().addClass('d-none')
+          $('#days-dates td').slice(startindex, endindex).removeClass()
+          $('#days-dates td').slice(startindex, startindex+2).addClass('text-center mx-5 d-table-cell')
+          $('#days-dates td').slice(startindex+2, startindex+3).addClass('text-center mx-5 d-none d-sm-table-cell')
+          $('#days-dates td').slice(startindex+3, startindex+4).addClass('text-center mx-5 d-none d-md-table-cell')
+          $('#days-dates td').slice(startindex+4, startindex+5).addClass('text-center mx-5 d-none d-lg-table-cell')
+          $('#days-dates td').slice(startindex+5, startindex+6).addClass('text-center mx-5 d-none d-xl-table-cell')
+          $('#days-dates td').slice(startindex+6, startindex+7).addClass('text-center mx-5 d-none d-xxl-table-cell')
+      }
+
+      function datePrev() {
+          startindex -= 1;
+          endindex -= 1;
+          pageNumber();
+          $('#days-header th').slice().removeClass()
+          $('#days-header th').slice().addClass('d-none')
+          $('#days-header th').slice(startindex, endindex).removeClass()
+          $('#days-header th').slice(startindex, startindex+2).addClass('position-relative p-3 d-table-cell')
+          $('#days-header th').slice(startindex+2, startindex+3).addClass('position-relative p-3 d-none d-sm-table-cell')
+          $('#days-header th').slice(startindex+3, startindex+4).addClass('position-relative p-3 d-none d-md-table-cell')
+          $('#days-header th').slice(startindex+4, startindex+5).addClass('position-relative p-3 d-none d-lg-table-cell')
+          $('#days-header th').slice(startindex+5, startindex+6).addClass('position-relative p-3 d-none d-xl-table-cell')
+          $('#days-header th').slice(startindex+6, startindex+7).addClass('position-relative p-3 d-none d-xxl-table-cell')
+
+          $('#days-dates td').slice().removeClass()
+          $('#days-dates td').slice().addClass('d-none')
+          $('#days-dates td').slice(startindex, endindex).removeClass()
+          $('#days-dates td').slice(startindex, startindex+2).addClass('text-center mx-5 d-table-cell')
+          $('#days-dates td').slice(startindex+2, startindex+3).addClass('text-center mx-5 d-none d-sm-table-cell')
+          $('#days-dates td').slice(startindex+3, startindex+4).addClass('text-center mx-5 d-none d-md-table-cell')
+          $('#days-dates td').slice(startindex+4, startindex+5).addClass('text-center mx-5 d-none d-lg-table-cell')
+          $('#days-dates td').slice(startindex+5, startindex+6).addClass('text-center mx-5 d-none d-xl-table-cell')
+          $('#days-dates td').slice(startindex+6, startindex+7).addClass('text-center mx-5 d-none d-xxl-table-cell')
+      }
+
+
+
+      function prevMonth() {
+          pages = {{ days | length }};
+      console.log(pages);
+      $('#one-time').html('<section class="p-sm-5">\
+              <div class="container">\
+                  <div class="row py-3">\
+                      <div class="col-2 d-flex justify-content-start">\
+                          <span id="datePrev" class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3" onclick="datePrev()"\
+  onclick="dateNext()"><i\
+                                  class="fa-solid fa-arrow-left-long"></i></span>\
+                      </div>\
+                      <div class="col-8 d-flex align-items-center justify-content-center gap-4">\
+                          <span id="prevMonth" class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3" onclick="prevMonth()"><i\
+                                  class="fa-solid fa-arrow-left-long"></i></span>\
+                          <span>{{ days.0.0 | date:"F" }}</span>\
+                          <span id="nextMonth" class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3" onclick="nextMonth()"><i\
+                                  class="fa-solid fa-arrow-right-long"></i></span>\
+                      </div>\
+                      <div class="col-2 d-flex justify-content-end">\
+                          <span id="dateNext" class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3" onclick="dateNext()"\
+  onclick="dateNext()"><i\
+                                  class="fa-solid fa-arrow-right-long"></i></span>\
+                      </div>\
+                  </div>\
+              </div>\
+          </section>\
+      \
+          <section class="p-5">\
+              <div class="container justify-content-center">\
+                  <div class=" row justify-content-center">\
+                      <form id="bookingForm" action="{% url "booking" pk=service.id %}" method="post" class=" row justify-content-center">\
+                      {% csrf_token %}\
+                          <table class="table table-bordered w-75">\
+                              <thead>\
+                                  <tr id="days-header">\
+                                      {% for day in days %}\
+                                      {% if forloop.counter0 < 7 %} {% if forloop.counter0 < 2 %} \
+                                      <th\
+                                        scope="col"\
+                                        class="position-relative p-3 d-table-cell"\
+                                      >\
+                                      {% endif %}\
+                                      {% if forloop.counter0 == 2 %}\
+                                      <th\
+                                        scope="col"\
+                                        class="position-relative p-3 d-none d-sm-table-cell"\
+                                      >\
+                                      {% endif %}\
+                                      {% if forloop.counter0 == 3 %}\
+                                      <th\
+                                        scope="col"\
+                                        class="position-relative p-3 d-none d-md-table-cell"\
+                                      >\
+                                      {% endif %}\
+                                      {% if forloop.counter0 == 4 %}\
+                                      <th\
+                                        scope="col"\
+                                        class="position-relative p-3 d-none d-lg-table-cell"\
+                                      >\
+                                      {% endif %}\
+                                      {% if forloop.counter0 == 5 %}\
+                                      <th\
+                                        scope="col"\
+                                        class="position-relative p-3 d-none d-xl-table-cell"\
+                                      >\
+                                      {% endif %}\
+                                      {% if forloop.counter0 == 6 %} \
+                                      <th \
+                                        scope="col" \
+                                        class="position-relative p-3 d-none d-xxl-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                        <!-- <div class="p-3 position-relative w-100 h-100"> -->\
+                                        {% if forloop.first %}\
+                                        <span\
+                                          class="border border-1 p-2 rounded-circle fw-semibold fs-4"\
+                                          style="background-color: red; color: white"\
+                                        >\
+                                          {{ day.0 | date:"d" }}\
+                                        </span>\
+                                        {% else %}\
+                                        <span\
+                                          class="border border-1 p-2 rounded-circle fw-semibold fs-4"\
+                                        >\
+                                          {{ day.0 | date:"d" }}\
+                                        </span>\
+                                        {% endif %}\
+                                        <span\
+                                          style="\
+                                            position: absolute;\
+                                            top: 0;\
+                                            right: 0px;\
+                                            font-weight: 500;\
+                                            color: #555;\
+                                          "\
+                                        >\
+                                          {{ day.0 | date:"D" }}\
+                                        </span>\
+                                        <!-- </div> -->\
+                                      </th>\
+                                      {% endif %}\
+                                      {% if forloop.counter0 >= 7 %}\
+                                      <th scope="col" class="d-none">\
+                                          {% if forloop.first %}\
+                                        <span\
+                                          class="border border-1 p-2 rounded-circle fw-semibold fs-4"\
+                                          style="background-color: red; color: white"\
+                                        >\
+                                          {{ day.0 | date:"d" }}\
+                                        </span>\
+                                        {% else %}\
+                                        <span\
+                                          class="border border-1 p-2 rounded-circle fw-semibold fs-4"\
+                                        >\
+                                          {{ day.0 | date:"d" }}\
+                                        </span>\
+                                        {% endif %}\
+                                          <span\
+                                            style="\
+                                              position: absolute;\
+                                              top: 0;\
+                                              right: 10px;\
+                                              font-weight: 500;\
+                                              color: #555;\
+                                            "\
+                                          >\
+                                            {{ day.0 | date:"D" }}\
+                                          </span>\
+                                      </th>\
+                                      {% endif %} \
+                                      {% endfor %}\
+                                  </tr>\
+                              </thead>\
+                              <tbody>\
+                                  <tr id="days-dates">\
+                                      {% for day in days %}\
+                                      {% if forloop.counter0 < 7 %} {% if forloop.counter0 < 2 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                      {% if forloop.counter0 == 2 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-none d-sm-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                      {% if forloop.counter0 == 3 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-none d-md-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                      {% if forloop.counter0 == 4 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-none d-lg-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                      {% if forloop.counter0 == 5 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-none d-xl-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                      {% if forloop.counter0 == 6 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-none d-xxl-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                          <div class="d-flex justify-content-center">\
+                                              <input type="hidden" class="startDate" name="startDate"\
+                                              value="{{ day.0 | date:"Y-m-d" }}" disabled>\
+                                              <ul class="list-group w-75 pt-2">\
+                                                  {% for key, value in day.1.items %}\
+                                                  {% if value < maxServiceTimes %} <li id="{{ key }}" value="{{ key }}"\
+                                                      class="timeList list-group-item rounded-5 mb-3" onclick="timeList(this)">\
+                                                      {{ key }}:00\
+                                                      </li>\
+                                                      {% endif %}\
+                                                      {% endfor %}\
+                                              </ul>\
+                                          </div>\
+                                          </td>\
+                                          {% endif %}\
+                                          {% if forloop.counter0 >= 7 %} <td scope="col" class="text-center mx-5 d-none"\
+                                              ">\
+          \
+                                              <div class="d-flex justify-content-center">\
+                                                <input type="hidden" class="startDate" name="startDate"\
+                                                value="{{ day.0 | date:"Y-m-d" }}" disabled>\
+                                                  <ul class="list-group w-75 pt-2">\
+                                                      {% for key, value in day.1.items %}\
+                                                      {% if value < maxServiceTimes %} <li id="{{ key }}" value="{{ key }}"\
+                                                          class="timeList list-group-item rounded-5 mb-3" onclick="timeList(this)">\
+                                                          {{ key }}:00\
+                                                          </li>\
+                                                          {% endif %}\
+                                                          {% endfor %}\
+                                                  </ul>\
+                                              </div>\
+                                          </td>\
+                                          {% endif %}\
+                                          {% endfor %}\
+          \
+                                  </tr>\
+                              </tbody>\
+                          </table>\
+                          <input id="oneTimeBooking" type="hidden" name="onetimings">\
+                      </form>\
+                  </div>\
+              </div>\
+          </section>')
+      };
+
+      function nextMonth() {
+          pages = {{ nextMonthDays | length }};
+      console.log(pages);
+      $('#one-time').html('<section class="p-sm-5">\
+              <div class="container">\
+                  <div class="row py-3">\
+                      <div class="col-2 d-flex justify-content-start">\
+                          <span id="datePrev" class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3" onclick="datePrev()" onclick="datePrev()"\
+  onclick="dateNext()"><i\
+                                  class="fa-solid fa-arrow-left-long"></i></span>\
+                      </div>\
+                      <div class="col-8 d-flex align-items-center justify-content-center gap-4">\
+                          <span id="prevMonth" class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3" onclick="prevMonth()"><i\
+                                  class="fa-solid fa-arrow-left-long"></i></span>\
+                          <span>{{ nextMonthDays.0.0 | date:"F" }}</span>\
+                          <span id="nextMonth" class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3 " onclick="nextMonth()"><i\
+                                  class="fa-solid fa-arrow-right-long"></i></span>\
+                      </div>\
+                      <div class="col-2 d-flex justify-content-end">\
+                          <span id="dateNext" class="changeButton text-center btn btn-outline-dark border border-1 rounded-circle p-3" onclick="dateNext()" onclick="dateNext()"\
+  onclick="dateNext()"><i\
+                                  class="fa-solid fa-arrow-right-long"></i></span>\
+                      </div>\
+                  </div>\
+              </div>\
+          </section>\
+      \
+          <section class="p-5">\
+              <div class="container justify-content-center">\
+                  <div class=" row justify-content-center">\
+                      <form id="bookingForm" action="{% url "booking" pk=service.id %}" method="post" class=" row justify-content-center">\
+                      {% csrf_token %}\
+                          <table class="table table-bordered w-75">\
+                              <thead>\
+                                  <tr id="days-header">\
+                                      {% for day in nextMonthDays %}\
+                                      {% if forloop.counter0 < 7 %} {% if forloop.counter0 < 2 %} \
+                                      <th\
+                                        scope="col"\
+                                        class="position-relative p-3 d-table-cell"\
+                                      >\
+                                      {% endif %}\
+                                      {% if forloop.counter0 == 2 %}\
+                                      <th\
+                                        scope="col"\
+                                        class="position-relative p-3 d-none d-sm-table-cell"\
+                                      >\
+                                      {% endif %}\
+                                      {% if forloop.counter0 == 3 %}\
+                                      <th\
+                                        scope="col"\
+                                        class="position-relative p-3 d-none d-md-table-cell"\
+                                      >\
+                                      {% endif %}\
+                                      {% if forloop.counter0 == 4 %}\
+                                      <th\
+                                        scope="col"\
+                                        class="position-relative p-3 d-none d-lg-table-cell"\
+                                      >\
+                                      {% endif %}\
+                                      {% if forloop.counter0 == 5 %}\
+                                      <th\
+                                        scope="col"\
+                                        class="position-relative p-3 d-none d-xl-table-cell"\
+                                      >\
+                                      {% endif %}\
+                                      {% if forloop.counter0 == 6 %} \
+                                      <th \
+                                        scope="col" \
+                                        class="position-relative p-3 d-none d-xxl-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                        <!-- <div class="p-3 position-relative w-100 h-100"> -->\
+                                        {% if forloop.first %}\
+                                        <span\
+                                          class="border border-1 p-2 rounded-circle fw-semibold fs-4"\
+                                          style="background-color: red; color: white"\
+                                        >\
+                                          {{ day.0 | date:"d" }}\
+                                        </span>\
+                                        {% else %}\
+                                        <span\
+                                          class="border border-1 p-2 rounded-circle fw-semibold fs-4"\
+                                        >\
+                                          {{ day.0 | date:"d" }}\
+                                        </span>\
+                                        {% endif %}\
+                                        <span\
+                                          style="\
+                                            position: absolute;\
+                                            top: 0;\
+                                            right: 0px;\
+                                            font-weight: 500;\
+                                            color: #555;\
+                                          "\
+                                        >\
+                                          {{ day.0 | date:"D" }}\
+                                        </span>\
+                                        <!-- </div> -->\
+                                      </th>\
+                                      {% endif %}\
+                                      {% if forloop.counter0 >= 7 %}\
+                                      <th scope="col" class="d-none">\
+                                          {% if forloop.first %}\
+                                        <span\
+                                          class="border border-1 p-2 rounded-circle fw-semibold fs-4"\
+                                          style="background-color: red; color: white"\
+                                        >\
+                                          {{ day.0 | date:"d" }}\
+                                        </span>\
+                                        {% else %}\
+                                        <span\
+                                          class="border border-1 p-2 rounded-circle fw-semibold fs-4"\
+                                        >\
+                                          {{ day.0 | date:"d" }}\
+                                        </span>\
+                                        {% endif %}\
+                                          <span\
+                                            style="\
+                                              position: absolute;\
+                                              top: 0;\
+                                              right: 10px;\
+                                              font-weight: 500;\
+                                              color: #555;\
+                                            "\
+                                          >\
+                                            {{ day.0 | date:"D" }}\
+                                          </span>\
+                                      </th>\
+                                      {% endif %} \
+                                      {% endfor %}\
+                                  </tr>\
+                              </thead>\
+                              <tbody>\
+                                <tr id="days-dates">\
+                                      {% for day in nextMonthDays %}\
+                                      {% if forloop.counter0 < 7 %} {% if forloop.counter0 < 2 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                      {% if forloop.counter0 == 2 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-none d-sm-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                      {% if forloop.counter0 == 3 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-none d-md-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                      {% if forloop.counter0 == 4 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-none d-lg-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                      {% if forloop.counter0 == 5 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-none d-xl-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                      {% if forloop.counter0 == 6 %} \
+                                      <td \
+                                        scope="col" \
+                                        class="text-center mx-5 d-none d-xxl-table-cell" \
+                                      > \
+                                      {% endif %} \
+                                          <div class="d-flex justify-content-center">\
+                                              <input type="hidden" class="startDate" name="startDate"\
+                                              value="{{ day.0 | date:"Y-m-d" }}" disabled>\
+                                              <ul class="list-group w-75 pt-2">\
+                                                  {% for key, value in day.1.items %}\
+                                                  {% if value < maxServiceTimes %} <li id="{{ key }}" value="{{ key }}"\
+                                                      class="timeList list-group-item rounded-5 mb-3" onclick="timeList(this)">\
+                                                      {{ key }}:00\
+                                                      </li>\
+                                                      {% endif %}\
+                                                      {% endfor %}\
+                                              </ul>\
+                                          </div>\
+                                          </td>\
+                                          {% endif %}\
+                                          {% if forloop.counter0 >= 7 %} <td scope="col" class="text-center mx-5 d-none"\
+                                              ">\
+          \
+                                              <div class="d-flex justify-content-center">\
+                                                <input type="hidden" class="startDate" name="startDate"\
+                                                  value="{{ day.0 | date:"Y-m-d" }}" disabled>\
+                                                  <ul class="list-group w-75 pt-2">\
+                                                      {% for key, value in day.1.items %}\
+                                                      {% if value < maxServiceTimes %} <li id="{{ key }}" value="{{ key }}"\
+                                                          class="timeList list-group-item rounded-5 mb-3" onclick="timeList(this)">\
+                                                          {{ key }}:00\
+                                                          </li>\
+                                                          {% endif %}\
+                                                          {% endfor %}\
+                                                  </ul>\
+                                              </div>\
+                                          </td>\
+                                          {% endif %}\
+                                          {% endfor %}\
+          \
+                                  </tr>\
+                              </tbody>\
+                          </table>\
+                          <input id="oneTimeBooking" type="hidden" name="onetimings">\
+                      </form>\
+                  </div>\
+              </div>\
+          </section>')
+      }
+
+      function pageNumber() {
+
+        console.log(endindex)
+          
+        if (endindex < pages) {
+          $('#dateNext').removeClass('d-xxl-none d-xl-none d-lg-none d-md-none d-sm-none d-none')
+        } else {
+          if (startindex+2 >= pages) {
+            $("#dateNext").removeClass("d-xxl-none d-xl-none d-lg-none d-md-none d-sm-none d-none")
+            $("#dateNext").addClass("d-none")
+          }
+          else if (startindex+3 >= pages) {
+            $("#dateNext").removeClass("d-xxl-none d-xl-none d-lg-none d-md-none d-sm-none d-none")
+            $("#dateNext").addClass("d-sm-none")
+          }
+          else if (startindex+4 >= pages) {
+            $("#dateNext").removeClass("d-xxl-none d-xl-none d-lg-none d-md-none d-sm-none d-none")
+            $("#dateNext").addClass("d-md-none")
+          }
+          else if (startindex+5 >= pages) {
+            $("#dateNext").removeClass("d-xxl-none d-xl-none d-lg-none d-md-none d-sm-none d-none")
+            $("#dateNext").addClass("d-lg-none")
+          }
+          else if (startindex+6 >= pages) {
+            $("#dateNext").removeClass("d-xxl-none d-xl-none d-lg-none d-md-none d-sm-none d-none")
+            $("#dateNext").addClass("d-xl-none")
+          }
+          else if (startindex+7 >= pages) {
+            $("#dateNext").removeClass("d-xxl-none d-xl-none d-lg-none d-md-none d-sm-none d-none")
+            $("#dateNext").addClass("d-xxl-none")
+          }
+        }
+          
+
+          if (startindex <= 0) {
+            $("#datePrev").addClass("d-none")
+          } else {
+            $("#datePrev").removeClass('d-none')
+          }
+      }
+      
+</script>
+
+{% endblock content %}

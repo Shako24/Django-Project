@@ -1,0 +1,37 @@
+[
+    {
+        "model": "services.Worker",
+        "fields":{
+            "serviceType": "grdn",
+            "numOfWorkers": 4
+        }
+    },
+    {
+        "model": "services.Worker",
+        "fields":{
+            "serviceType": "hskp",
+            "numOfWorkers": 6
+        }
+    },
+    {
+        "model": "services.Worker",
+        "fields":{
+            "serviceType": "cwsh",
+            "numOfWorkers": 4
+        }
+    },
+    {
+        "model": "services.Worker",
+        "fields":{
+            "serviceType": "vppi",
+            "numOfWorkers": 1
+        }
+    },
+    {
+        "model": "services.Worker",
+        "fields":{
+            "serviceType": "vhmn",
+            "numOfWorkers": 1
+        }
+    }
+]

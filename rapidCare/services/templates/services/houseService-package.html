@@ -1,0 +1,194 @@
+{% extends 'services/house_keeping.html' %}
+{% load static %}
+{% block houseservice %}
+
+<link rel="stylesheet" href="{% static 'css/houseService-package.css' %}">
+<form action="{% url 'houseKeepingPackage' %}" method="post" id="house-package">
+    {% csrf_token %}
+    <section class="mb-5 mt-4">
+        <div class="container">
+            <div class="col mx-sm-5">
+                <div class="row justify-content-start gap-3 mb-5">
+                    <div class="col-2 col-lg-1"><span class="border border-danger rounded-circle bg-danger p-3 text-light">
+                            1/5
+                        </span></div>
+                    <div class="col-10">
+                        <h1>Hours</h1>
+                        <h5 class="text-secondary">How many hours do you need your professionals to stay?</h5>
+                    </div>
+                </div>
+                <div class="d-flex flex-row justify-content-evenly align-items-center gap-2 gap-lg-5 mx-3">
+                    <div class="col text-center">
+                        <span class="h4 options px-3 py-2 house-hours" data-value="1">1</span>
+                    </div>
+                    <div class="col text-center">
+                        <span class="h4 options p-2 house-hours" data-value="1.5">1.5</span>
+                    </div>
+                    <div class="col text-center">
+                        <span class="h4 options px-3 py-2 house-hours" data-value="2">2</span>
+                    </div>
+                    <div class="col text-center">
+                        <span class="h4 options px-3 py-2 house-hours" data-value="3">3</span>
+                    </div>
+                    <input type="hidden" id="hours" name="hours">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <div class="container">
+            <div class="col mx-sm-5">
+                <div class="row justify-content-start gap-3 mb-5">
+                    <div class="col-2 col-lg-1"><span class="border border-danger rounded-circle bg-danger p-3 text-light">
+                            2/5
+                        </span></div>
+                    <div class="col-10">
+                        <h1>Professionals</h1>
+                        <h5 class="text-secondary">How many professionals do you need?</h5>
+                    </div>
+                </div>
+                <div class="d-flex flex-row justify-content-evenly align-items-center gap-2 gap-lg-5 mx-5">
+                    <div class="col text-center">
+                        <span class="h3 options px-3 py-2 house-maids" data-value="1">1</span>
+                    </div>
+                    <div class="col text-center">
+                        <span class="h3 options px-3 py-2 house-maids" data-value="2">2</span>
+                    </div>
+                    <div class="col text-center">
+                        <span class="h3 options px-3 py-2 house-maids" data-value="3">3</span>
+                    </div>
+                    <div class="col text-center">
+                        <span class="h3 options px-3 py-2 house-maids" data-value="4">4</span>
+                    </div>
+                    <div class="col text-center">
+                        <span class="h3 options px-3 py-2 house-maids" data-value="5">5</span>
+                    </div>
+                    <div class="col text-center">
+                        <span class="h3 options px-3 py-2 house-maids" data-value="6">6</span>
+                    </div>
+                    <input type="hidden" id="maids" name="maids">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <div class="container">
+            <div class="col mx-sm-5">
+                <div class="row justify-content-start gap-3 mb-5">
+                    <div class="col-2 col-lg-1"><span class="border border-danger rounded-circle bg-danger p-3 text-light">
+                            3/5
+                        </span></div>
+                    <div class="col-10">
+                        <h1>Supplies</h1>
+                        <h5 class="text-secondary">Do you require cleaning materials?</h5>
+                    </div>
+                </div>
+                <div class="row justify-content-center gap-4">
+                    <div class="d-flex rounded-2 supplies house-supplies" data-value="false">
+                        <span class="h1">No, I don't need them</span>
+                    </div>
+                    <div class="d-flex rounded-2 supplies house-supplies" data-value="true">
+                        <span class="h1">Yes, please</span>
+                    </div>
+                    <input type="hidden" id="supplies" name="supplies">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <div class="container">
+            <div class="col mx-sm-5">
+                <div class="row justify-content-start gap-3 mb-5">
+                    <div class="col-2 col-lg-1"><span class="border border-danger rounded-circle bg-danger p-3 text-light">
+                            4/5
+                        </span></div>
+                    <div class="col-10">
+                        <h1>Days Per Week</h1>
+                        <h5 class="text-secondary">How many days in a week you want cleaning service?</h5>
+                    </div>
+                </div>
+                <div class="d-flex flex-row justify-content-evenly align-items-center gap-5 mx-5">
+                    <div class="col text-center">
+                        <span class="h3 options house-days px-2" data-value="2">2</span>
+                    </div>
+                    <div class="col text-center">
+                        <span class="h3 options house-days px-2" data-value="3">3</span>
+                    </div>
+                    <div class="col text-center">
+                        <span class="h3 options house-days px-2" data-value="5">5</span>
+                    </div>
+                    <input type="hidden" id="days" name="days">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- <input type="submit" value="Next" style="position: fixed; bottom: 200px; right: 50px;" class="btn btn-danger"> -->
+</form>
+
+<section>
+    <div class="container">
+        <div class="col mx-sm-5">
+            <div class="row justify-content-start gap-3 mb-5">
+                <div class="col-2 col-lg-1"><span class="border border-danger rounded-circle bg-danger p-3 text-light">
+                        5/5
+                    </span></div>
+                <div class="col-10">
+                    <h1>Order Summary</h1>
+                    <h5 class="text-secondary">Preview Your Order</h5>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-10">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Option</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hours</td>
+                                <td id="table-val-1"></td>
+                            </tr>
+                            <tr>
+                                <td>Professionals</td>
+                                <td id="table-val-2"></td>
+                            </tr>
+                            <tr>
+                                <td>Supplies</td>
+                                <td id="table-val-3"></td>
+                            </tr>
+                            <tr>
+                                <td>Days per Week</td>
+                                <td id="table-val-4"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="d-flex justify-content-end mx-3">
+            <button onclick="housePackage()" type="submit" class="next">
+                NEXT
+            </button>
+        </div>
+    </div>
+</section>
+
+<script>
+    function housePackage() {
+        $('#house-package').submit();
+    }
+</script>
+
+<script src="{% static 'js/houseService-package.js' %}"></script>
+{% endblock houseservice %}

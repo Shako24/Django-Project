@@ -1,0 +1,346 @@
+{% extends './base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<div class="container-component container-component1">
+  <div class="index_div">
+    <span class="index-heading">Lorem Ipsum</span>
+    <span class="text-white fw-semibold index-semi-heading">Lorem Ipsum is simply dummy text</span>
+  </div>
+  <div class="index_div service_div">
+    <a href="{% url 'carWash' %}">
+      <div class="col">
+        <div class="row" style="height: 100px; width: 124px;"><img src="{% static 'images/group-52.png' %}"
+            height="100%" width="100%" alt=""></div>
+        <div class="row" align="center"><span class="h5 fw-semibold text-center">Door-Step <br> Car Spa</span></div>
+      </div>
+    </a>
+    <a href="{% url 'vehiclecare' %}">
+      <div class="col">
+        <div class="row" style="height: 100px; width: 124px;"><img src="{% static 'images/group-521.png' %}"
+            height="100%" width="100%" alt=""></div>
+        <div class="row" align="center"><span class="h5 fw-semibold text-center">Car <br> Service</span></div>
+      </div>
+    </a>
+    <a href="{% url 'vehicleInsurance' %}">
+      <div class="col">
+        <div class="row" style="height: 100px; width: 124px;"><img src="{% static 'images/group-523.png' %}"
+            height="100%" width="100%" alt=""></div>
+        <div class="row" align="center"><span class="h5 fw-semibold text-center">Vehicle <br> Insurance</span></div>
+      </div>
+    </a>
+    <a href="{% url 'houseKeeping' %}">
+      <div class="col">
+        <div class="row" style="height: 100px; width: 124px;"><img src="{% static 'images/group-522.png' %}"
+            height="100%" width="100%" alt=""></div>
+        <div class="row" align="center"><span class="h5 fw-semibold text-center">House <br> Keeping</span></div>
+      </div>
+    </a>
+    <a href="{% url 'garden' %}">
+      <div class="col">
+        <div class="row" style="height: 100px; width: 124px;"><img src="{% static 'images/group-524.png' %}"
+            height="100%" width="100%" alt=""></div>
+        <div class="row" align="center"><span class="h5 fw-semibold text-center">Lawn <br> Care</span></div>
+      </div>
+    </a>
+  </div>
+</div>
+<div class="container-component container-component2">
+  <h1>How It Works</h1>
+  <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </span>
+  <div class="multi-button">
+    <button id="company-btn-1" class="company-btn selected">Get in Touch</button>
+    <button id="company-btn-2" class="company-btn">Get Amazing Service</button>
+    <button id="company-btn-3" class="company-btn">Pay</button>
+  </div>
+  <hr class="mt-5" />
+  <div class="company-info gap-md-5 mx-md-5">
+    <div class="col company-info-1 align-self-start">
+      <div class="row">
+        <i class="fa fa-phone fa-2x"></i>
+        <div class="col">
+          <h1>Call us</h1>
+          <span>
+            Our call centre operates from 8am to 10pm, 7 days a week. contact us now at +1 11 111 1111
+          </span>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <i class="fa fa-envelope fa-2x"></i>
+        <div class="col">
+          <h1>Email us</h1>
+          <span>
+            For complaints and suggestions email us at info@abc.me
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col company-info-2 align-self-start d-none">
+      <div class="row mb-3">
+        <span>
+          Once the order has been accepted, our service professional will arrive at your doorstep at the appointed hour
+          and give you a service of exceptional quality that is completed quickly and effectively.
+        </span>
+      </div>
+      <div class="row mb-3">
+        <span>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+          make a type specimen book. It has survived not only five centuries, but also the leap into electronic
+          typesetting, remaining essentially unchanged.
+        </span>
+      </div>
+      <div class="row mb-3">
+        <span>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+          make a type specimen book. It has survived not only five centuries, but also the leap into electronic
+          typesetting, remaining essentially unchanged.
+        </span>
+      </div>
+    </div>
+    <div class="col company-info-3 align-self-start d-none">
+      <div class="row mb-3">
+        <span>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+          make a type specimen book. It has survived not only five centuries, but also the leap into electronic
+          typesetting, remaining essentially unchanged.
+        </span>
+      </div>
+      <div class="row">
+        <span>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+          make a type specimen book. It has survived not only five centuries, but also the leap into electronic
+          typesetting, remaining essentially unchanged.
+        </span>
+      </div>
+    </div>
+    <div class="col company-info-video">
+      <video height="100%" width="100%" autoplay muted loop playsinline>
+        <source src="{% static 'images/About_us.mp4' %}" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+<div id="About_us" class="container-component container-component3 mt-md-5 py-5">
+  <h1>Who We Are</h1>
+  <hr class="mt-3">
+  <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+    type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+    remaining essentially unchanged.
+  </span>
+  <hr class="mt-2">
+  <div class="d-flex flex-column flex-md-row gap-4 align-items-center w-100 justify-content-center">
+    <!-- <div class=""> -->
+    <button>
+      <span style="font-weight:bolder; font-size: 2em;">10</span><br>
+      <span>Years of experience</span>
+    </button>
+    <!-- </div> -->
+    <!-- <div class=""> -->
+    <button>
+      <span style="font-weight:bolder; font-size: 2em;">1 Million+</span><br>
+      <span>Happy Customers</span>
+    </button>
+    <!-- </div> -->
+    <!-- <div class=""> -->
+    <button>
+      <span style="font-weight:bolder; font-size: 2em;">40+</span><br>
+      <span>EMPLOYEES</span>
+    </button>
+    <!-- </div> -->
+  </div>
+  <hr class="mt-9">
+  <div class="row">
+    <div class="col" style="text-align: center;">
+      <h1>CEO Statement</h1>
+      <div class="d-flex flex-sm-row flex-column align-items-center mt-5">
+        <div class="col"><img style="box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);" src="{% static 'images/ceo.jpg' %}"
+            alt="" width="300"></div>
+        <div class="col">
+          <div class="d-flex justify-content-start" style="height: 40px"><img src="{% static 'images/start.svg' %}"
+              alt="">
+          </div>
+          <hr class="mb-7">
+          <div class="col">
+            <span class="ceo-statement">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+              Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+              galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but
+              also the leap into electronic typesetting, remaining essentially unchanged.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="mt-9">
+  <div class="d-flex flex-sm-row flex-column align-items-center">
+    <div class="col">
+      <h1>Our Vision</h1>
+      <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.</span>
+    </div>
+    <div class="d-flex col justify-content-end">
+      <img src="{% static 'images/vision-statement.svg' %}" width="300" alt="vision">
+    </div>
+  </div>
+  <hr class="mt-9">
+  <div class="d-flex flex-sm-row flex-column-reverse align-items-center">
+    <div class="d-flex col justify-content-start">
+      <img src="{% static 'images/business-mission.svg' %}" width="300" alt="Mission">
+    </div>
+    <div class="col">
+      <h1>Our Mission</h1>
+      <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.
+      </span>
+    </div>
+  </div>
+</div>
+<div class="component-container container-component4">
+  <hr class="mt-9">
+  <h1>Our Values</h1>
+  <span>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+    sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </span>
+  <div class="value">
+    <div class="value content">
+      <img src="{% static '/images/fadiamond.svg' %}" alt="">
+      <h1>High Quality</h1>
+      <!-- <p>When it comes to the satisfaction of our clients, we never compromise on quality.</p> -->
+    </div>
+
+    <div class="value content">
+      <img src="{% static '/images/gameiconsecology.svg' %}" alt="">
+      <h1>Professionalism</h1>
+      <!-- <p>Our personnel demonstrate responsibility, honesty, accountability, and excellence in their actions.</p> -->
+    </div>
+    <div class="value content">
+      <img src="{% static '/images/birocket.svg' %}" alt="">
+      <h1>Eco Friendly</h1>
+      <!-- <p>We employ strategies and procedures that are intended to have minimal or no negative impact on the environment. -->
+      </p>
+    </div>
+    <div class="value content">
+      <img src="{% static '/images/gameiconstakemymoney.svg' %}" alt="">
+      <h1>Fast Service</h1>
+      <!-- <p>We deliver effective and prompt service</p> -->
+    </div>
+    <div class="value content">
+      <img src="{% static '/images/teamworksvgrepocom-1.svg' %}" alt="">
+      <h1>Affordable</h1>
+      <!-- <p>Our affordable pricing accommodates customer budgets without sacrificing service quality. -->
+      </p>
+    </div>
+    <div class="value content">
+      <img src="{% static '/images/icomoonfreeprofile.svg' %}" alt="">
+      <h1>Team Work</h1>
+      <!-- <p>To better satisfy our customers' expectations, we operate in a collaborative environment. -->
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="row justify-content-center mb-4">
+  <h1 class="text-center">
+    Customer Reviews
+  </h1>
+</div> -->
+
+<!-- <div class="slideshow-container">
+
+  <div class="mySlides">
+    <img src="{% static 'images/reviews/1.jpg' %}" width="100%" height="100%">
+  </div>
+
+  <div class="mySlides">
+    <img src="{% static 'images/reviews/2.jpg' %}" width="100%" height="100%">
+  </div>
+
+  <div class="mySlides">
+    <img src="{% static 'images/reviews/3.jpg' %}" width="100%" height="100%">
+  </div>
+
+  <div class="mySlides">
+    <img src="{% static 'images/reviews/4.jpg' %}" width="100%" height="100%">
+  </div>
+
+  <div class="mySlides">
+    <img src="{% static 'images/reviews/5.jpg' %}" width="100%" height="100%">
+  </div>
+
+  <div class="mySlides">
+    <img src="{% static 'images/reviews/6.jpg' %}" width="100%" height="100%">
+  </div>
+
+  <div class="mySlides">
+    <img src="{% static 'images/reviews/7.jpg' %}" width="100%" height="100%">
+  </div>
+
+</div> -->
+
+<script>
+  var slideIndex = 0;
+  showSlides();
+
+  function showSlides() {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) { slideIndex = 1 }
+    slides[slideIndex - 1].style.display = "block";
+    setTimeout(showSlides, 2000); // Change image every 2 seconds
+  }
+</script>
+
+<script>
+  $('#company-btn-1').click(function () {
+    $('.multi-button').children().removeClass('selected')
+    $(this).addClass('selected')
+    $('.company-info-1').removeClass('d-none');
+    $('.company-info-2').addClass('d-none');
+    $('.company-info-3').addClass('d-none');
+
+  })
+
+  $('#company-btn-2').click(function () {
+    $('.multi-button').children().removeClass('selected')
+    $(this).addClass('selected')
+    $('.company-info-1').addClass('d-none');
+    $('.company-info-2').removeClass('d-none');
+    $('.company-info-3').addClass('d-none');
+  })
+
+  $('#company-btn-3').click(function () {
+    $('.multi-button').children().removeClass('selected')
+    $(this).addClass('selected')
+    $('.company-info-1').addClass('d-none');
+    $('.company-info-2').addClass('d-none');
+    $('.company-info-3').removeClass('d-none');
+  })
+
+  $('document').on('load', function () {
+    $('#company-btn-1').click()
+  })
+
+</script>
+
+{% endblock content %}

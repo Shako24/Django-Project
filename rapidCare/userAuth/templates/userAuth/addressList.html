@@ -1,0 +1,47 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>Your Addresses</h1>
+<form id="addressForm">
+    {% csrf_token %}
+    {% for address in addresses %}
+
+    <div>
+        <a id="address-{{ address.id }}" href="{% url 'addressUpdate' pk=address.id %}">{{ address }}</a>
+        <input type="button" class="removeAddress" type="hidden" name="removeAddress-{{ address.id }}"
+            value="Remove Address">
+    </div>
+    <br><br>
+    {% endfor %}
+</form>
+<br><br>
+<a href="{% url 'addressCreate' %}"><button>Add New Address</button></a>
+
+<script type="text/javascript">
+
+    $(document).on("click", "input:button", function (e) {
+        e.preventDefault();
+        var myform = $('#addressForm')[0]
+        var formData = new FormData(myform);
+
+
+        formData.append($(this).attr('name'), "")
+        console.log(formData)
+
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+
+            }
+        })
+
+        $(this).parent().remove();
+    })
+</script>
+
+
+{% endblock content %}

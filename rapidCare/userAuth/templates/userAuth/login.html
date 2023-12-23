@@ -1,0 +1,129 @@
+{% extends './base.html' %}
+{% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+{% providers_media_js %}
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/login.css' %}" />
+<link rel="stylesheet" href="{% static 'css/mobile_login.css' %}">
+
+{% get_providers as socialaccount_providers %}
+<section class="d-flex justify-content-center">
+	<div class="login-container d-none d-lg-block" id="container">
+		<div class="form-container sign-up-container">
+			<form class="signForm" action="{% url 'register' %}" method="post">
+				{% csrf_token %}
+				<h1 class="signHeader">Create Account</h1>
+				<div class="social-container">
+					<a title="Google" class="socialaccount_provider google" href="/accounts/google/login/?process=login"><i
+							class="fab fa-google-plus-g"></i></a>
+					<a title="Facebook" href="{% provider_login_url 'facebook' method='oauth2' %}"><i
+							class="fab fa-facebook-f"></i></a>
+				</div>
+				<span class="signSpan">or use your email for registration</span>
+				<!-- <input class="signInput" type="text" placeholder="Name" />
+				<input class="signInput" type="email" placeholder="Email" />
+				<input class="signInput" type="password" placeholder="Password" /> -->
+				{{ registerForm.username }}
+				<div style="display: flex; flex-direction: row; column-gap: 5px;">
+					{{ registerForm.phone_number }}
+					{{ registerForm.phone_number_1 }}
+				</div>
+				{{ registerForm.email }}
+				{{ registerForm.password1 }}
+				{{ registerForm.password2 }}
+				<button class="signButton">Sign Up</button>
+			</form>
+		</div>
+		<div class="form-container sign-in-container">
+			<form class="signForm" action="{% url 'login' %}" method="post">
+				{% csrf_token %}
+				<h1 class="signHeader">Sign in</h1>
+				<div class="social-container">
+					<a title="Google" class="socialaccount_provider google" href="/accounts/google/login/?process=login"><i
+							class="fab fa-google-plus-g"></i></a>
+					<a title="Facebook" class="socialaccount_provider facebook"
+						href="/accounts/facebook/login/?process=login"><i class="fab fa-facebook-f"></i></a>
+				</div>
+				<span class="signSpan">or use your account</span>
+				<!-- <div style="display: flex; flex-direction: row; column-gap: 5px;">
+					{{ loginForm.phone_number }}
+					{{ loginForm.phone_number_1 }}
+				</div> -->
+				{{ loginForm.username|attr:"placeholder:Username" }}
+				{{ loginForm.password }}
+				<a href="{% url 'password-reset' %}" class="signA">Forgot your password?</a>
+				<button class="signButton">Sign In</button>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1 class="signHeader">Welcome Back!</h1>
+					<p class="signP">To keep connected with us please login with your personal info</p>
+					<button class="ghost signButton" id="signIn">Sign In</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+					<h1 class="signHeader">Hello, Friend!</h1>
+					<p class="signP">Enter your personal details and start journey with us</p>
+					<button class="ghost signButton" id="signUp">Sign Up</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="mx-3 mt-5 d-flex justify-content-center align-items-center">
+	<div class="Login_Box d-lg-none d-block">
+		<input type="checkbox" id="chk" aria-hidden="true">
+		<!-- Login Form -->
+		<div class="login px-4">
+			<form method="POST" action="{% url 'login' %}">
+				{% csrf_token %}
+				<label for="chk" aria-hidden="true" class="label_account">Login</label>
+				<div class="social-container d-flex justify-content-center">
+					<a title="Google" class="socialaccount_provider google text-white"
+						href="/accounts/google/login/?process=login"><i class="fab fa-google-plus-g"></i></a>
+					<a title="Facebook" href="{% provider_login_url 'facebook' method='oauth2' %}"><i
+							class="fab fa-facebook-f text-white"></i></a>
+				</div>
+				<span class="signSpan text-white text-center align-content-center">or use your email for
+					registration</span>
+				{{ loginForm.username|attr:"placeholder:Username"|attr:"autofocus" }}
+				<!-- <div class="mt-5" style="display: flex; flex-direction: row; column-gap: 5px;">
+					{{ loginForm.phone_number }}
+					{{ loginForm.phone_number_1 }}
+				</div> -->
+				{{ loginForm.password|attr:"placeholder:Password" }}
+				<button class="primaryAction button_account shadow" type="submit">Login</button>
+			</form>
+		</div>
+		<!-- Signup Form -->
+		<div class="signup px-4">
+			<form id="signup_form" method="POST" action="{% url 'register' %}">
+				{% csrf_token %}
+				<label for="chk" aria-hidden="true" class="label_account">Sign up</label>
+				{{ registerForm.username|attr:"placeholder:Username" }}
+				<div style="display: flex; flex-direction: row; column-gap: 5px;">
+					{{ registerForm.phone_number }}
+					{{ registerForm.phone_number_1 }}
+				</div>
+				{{ registerForm.email|attr:"placeholder:Email" }}
+				{{ registerForm.password1|attr:"placeholder:Password" }}
+				{{ registerForm.password2|attr:"placeholder:Re-Type Password" }}
+				<button class="primaryAction button_account" type="submit">Sign up</button>
+			</form>
+		</div>
+	</div>
+</section>
+
+
+<script src="{% static 'js/login.js' %}"></script>
+
+
+
+{% endblock content %}

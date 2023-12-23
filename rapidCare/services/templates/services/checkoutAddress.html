@@ -1,0 +1,46 @@
+{% extends 'userAuth/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Checkout Address Page</h1>
+
+<form action="{% url 'checkoutAddress' %}" method="post">
+{% csrf_token %}
+    <h3>Services</h3>
+    {% for service in services %}
+        {{ service }} <br>
+    {% endfor %}
+
+    <h3>Checkout Info</h3>
+    Services Price: {{ servicesPrice|floatformat:2 }} <br>
+    Discount: {{ discount|floatformat:2 }} <br>
+    VAT: {{ vat|floatformat:2 }} <br>
+    Total: {{ totalPrice|floatformat:2 }} <br>
+
+    {% if coupon != None %}
+        <input type="text" name="couponInput" id="couponInput" placeholder="Enter Coupon Code" value="{{ coupon }}">
+    {% else %}
+        <input type="text" name="couponInput" id="couponInput" placeholder="Enter Coupon Code">
+    {% endif %}
+    <button type="submit" name="couponSubmit">Apply Coupon</button> <br><br>
+
+    <label for="cashOnDelivery">Cash On Delivery?</label>
+    <input type="checkbox" name="cashOnDelivery" id="cashOnDelivery"><br><br>
+
+    <h3>Addresses</h3>
+    {% if addresses|length != 0 %}
+        {% for address in addresses %}
+            <input type="radio" id="{{ address }}" name="addressInput" value="{{ address }}">
+            <label for="{{ address }}">{{ address }}</label><br>
+        {% endfor %}
+    {% else %}
+        <a href="{% url 'addressCreate' %}"><button type="button">Add address</button></a>
+    {% endif %}
+    <br>
+    {% if not user.is_authenticated %}
+        <input type="email" name="guestEmailInput" id="guestEmailInput" placeholder="Email: ex@ex.com">
+        <input type="text" name="guestPhoneInput" id="guestPhoneInput" placeholder="Phone: +971 5x xxx xxxx"><br>
+    {% endif %}
+    <button type="submit" name="paySubmit">Proceed to Pay</button>
+</form>
+
+{% endblock content %}

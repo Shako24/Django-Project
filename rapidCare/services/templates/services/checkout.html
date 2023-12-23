@@ -1,0 +1,243 @@
+<!-- Reference -->
+<!-- https://www.w3schools.com/howto/howto_css_checkout_form.asp -->
+{% extends 'userAuth/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+<link rel="stylesheet" href="{% static 'css/mobile_checkout.css' %}">
+
+<section class="mx-3 mt-5 d-flex justify-content-center align-items-center">
+    {% if paymentPortal %}
+    <div class="checkout-container right-panel-active" id="container">
+    {% else %}
+    <div class="checkout-container" id="container">
+    {% endif %}
+        <div class="form-container payment-container">
+            <div class="paymentForm ">
+                <div class="iphone">
+                    <div class="d-flex d-sm-none" id="backAddressPortal" style="width: 20px; height: 20px; border-radius: 100%; overflow: hidden; border: 1px solid black; justify-content: center; align-items: center; cursor: pointer;">
+                        <i class="fa-solid fa-arrow-left-long" ></i>
+                    </div>
+                    <header class="header">
+                        <legend>Checkout</legend>
+                    </header>
+
+                    <form class="form" action="{% url 'checkout' %}" method="post">
+                        {% csrf_token %}
+                        <div>
+                            <h2 class="ps-2">Address</h2>
+                            <input type="hidden" name="addressInput" value="{{ addressSelected }}">
+                            <input type="hidden" name="guestEmailInput">
+                            <input type="hidden" name="guestPhoneInput">
+                            {% if user.is_authenticated %}
+                            {% if user.phone_number == None or user.phone_number == "" %}
+                            <input type="hidden" name="phone_numberInput">
+                            {% endif %}
+                            {% if user.email == None or user.email == "" %}
+                            <input type="hidden" name="emailInput">
+                            {% endif %}
+                            {% endif %}
+                            <div class="card" id="address-card">
+                                <address>
+                                    {% if user.is_authenticated %}
+                                    {{ addressSelected.user.username }} <br>
+                                    {% endif %}
+                                    House no. {{ addressSelected.unitNo }}, {{ addressSelected.area }} <br>
+                                    {{ addressSelected.state }}
+                                </address>
+                            </div>
+                        </div>
+
+                        <fieldset>
+                            <legend>Payment Method</legend>
+
+                            <div class="form__radios">
+                                <div class="form__radio">
+                                    <label for="card"><i class="bi bi-credit-card-fill"></i>Card Payment</label>
+                                    <input checked id="card" name="payment-method" type="radio" value="card" />
+                                </div>
+                                <div class="form__radio">
+                                    <label for="cash"><i class="bi bi-cash"></i>
+                                        Cash Payment</label>
+                                    <input id="cash" name="payment-method" type="radio" value="cash" />
+                                </div>
+
+
+                            </div>
+                        </fieldset>
+                        <hr class="mb-3">
+                        {% if coupon == None %}
+                        <input class="p-2 rounded-1" style="box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);" type="text"
+                            name="couponInput" id="couponInput" placeholder="Add coupon code">
+                        {% else %}
+                        <input class="p-2 rounded-1" style="box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);" type="text"
+                            name="couponInput" id="couponInput" placeholder="Add coupon code" value="{{ coupon }}">
+                        {% endif %}
+                        <button class="rounded-5 btn btn-secondary" type="submit" name="applyCoupon">Apply
+                            Coupon</button>
+                        <hr class="mb-3">
+                        <div>
+                            <h2>Shopping Bill</h2>
+
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>Service Price</td>
+                                        <td align="right">{{ servicesPrice }} AED</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Discount</td>
+                                        <td align="right">{{ discount }} AED</td>
+                                    </tr>
+                                    <tr>
+                                        <td>VAT</td>
+                                        <td align="right">{{ vat }} AED</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td align="right">{{ totalPrice }}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div>
+                            <button class="button button--full" type="submit" name="paySubmit"><svg class="icon">
+                                    <use xlink:href="#icon-shopping-bag" />
+                                </svg>Proceed to Pay</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="form-container address-container">
+            <div class="checkoutForm">
+                <h1 class="signHeader">Choose Your Address</h1>
+                <hr class="mb-3">
+                {% if addresses|length != 0 %}
+                {% for address in addresses %}
+                <div class="option w-100">
+                    <input class="address_radio" type="radio" name="addressesChoice" id="{{ address }}"
+                        value="{{ address }}" required>
+                    <label for="{{ address }}" aria-label="{{ address }}">
+                        <span></span>
+                        <address>
+                            {% if user.is_authenticated %}
+                            {{ address.user.username }} <br>
+                            {% endif %}
+                            House no. {{ address.unitNo }}, {{ address.area }} <br>
+                            {{ address.state }}
+                        </address>
+                    </label>
+                </div>
+                {% if not user.is_authenticated %}
+                <a href="{% url 'addressUpdate' pk=address.id %}"><button type="button" class="addAddress mb-2">Change
+                    Address</button></a>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                <a href="{% url 'addressCreate' %}"><button type="button" class="addAddress mb-2">Add
+                    Address</button></a>
+                {% endif %}
+
+                
+
+                {% if not user.is_authenticated %}
+                
+                <input class="p-2 my-2 rounded-1" style="box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);" type="email"
+                    id="guestEmailInput" placeholder="Email: ex@ex.com" required>
+                <input class="p-2 my-2 rounded-1" style="box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);" type="text"
+                    id="guestPhoneInput" placeholder="Phone: +971 5x xxx xxxx" required><br>
+                {% else %}
+                {% if user.phone_number == None or user.phone_number == "" %}
+                <input class="p-2 my-2 rounded-1" style="box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);" type="text"
+                    id="PhoneInput" placeholder="Phone: +971 5x xxx xxxx" required>
+                {% endif %}
+                {% if user.email == None or user.email == "" %}
+                <input class="p-2 my-2 rounded-1" style="box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);" type="email"
+                    id="EmailInput" placeholder="Email: a@a.com" required>
+                {% endif %}
+                {% endif %}
+
+                <button type="submit" class="signButton" id="paymentPortal">Go to Payment</button>
+                </form>
+            </div>
+
+        </div>
+        <div class="overlay-container d-none d-sm-block">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1 class="signHeader">Welcome</h1>
+                    <p class="signP">Please Select the payment method you would like to pay your bill</p>
+                    <button class="ghost signButton" id="addressPortal">Change Address</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1 class="signHeader">Hello, Customer</h1>
+                    <p class="signP">Please Select One of your Address to go to payment portal</p>
+                </div>
+            </div>
+        </div>
+</section>
+
+
+<script>
+    const paymentButton = document.getElementById('paymentPortal');
+    const addressButton = document.getElementById('addressPortal');
+    const backaddressButton = document.getElementById('backAddressPortal');    
+    const container = document.getElementById('container');
+
+    console.log('{{ addressSelected }}')
+
+    paymentButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        // ($("input[name=addressesChoice]:checked").val())
+
+        console.log($("#guestEmailInput").val(), $("#guestPhoneInput").val());
+
+        if ($("input[name=addressesChoice]:checked").length > 0) { 
+            {% if user.is_authenticated %}
+
+            {% if user.phone_number == None or user.phone_number == "" %}
+            $('#address-card>address').html($("input[name=addressesChoice]:checked").parent().find('label>address').html() +'<br/>'+ '{{ user.email }}' +'<br/>'+ $("#PhoneInput").val());
+            $('input[name=phone_numberInput]').val($("#PhoneInput").val());
+            {% else %}
+            $('#address-card>address').html($("input[name=addressesChoice]:checked").parent().find('label>address').html() +'<br/>'+ '{{ user.email }}' +'<br/>'+ '{{ user.phone_number }}');
+            {% endif %}
+
+            {% if user.email == None or user.email == "" %}
+            $('#address-card>address').html($("input[name=addressesChoice]:checked").parent().find('label>address').html() +'<br/>'+ $("#EmailInput").val() +'<br/>'+ '{{ user.phone_number }}');
+            $('input[name=emailInput]').val($("#EmailInput").val());
+            {% else %}
+            $('#address-card>address').html($("input[name=addressesChoice]:checked").parent().find('label>address').html() +'<br/>'+ '{{ user.email }}' +'<br/>'+ '{{ user.phone_number }}');
+            {% endif %}
+
+            {% else %}
+            $('#address-card>address').html($("input[name=addressesChoice]:checked").parent().find('label>address').html() +'<br/>'+$("#guestEmailInput").val() +'<br/>'+$("#guestPhoneInput").val());            $('input[name=addressInput]').val($("input[name=addressesChoice]:checked").val());
+            {% endif %}
+            $('input[name=addressInput]').val($("input[name=addressesChoice]:checked").val())
+            $('input[name=guestEmailInput]').val($('#guestEmailInput').val());
+            $('input[name=guestPhoneInput]').val($('#guestPhoneInput').val());
+            container.classList.add("right-panel-active");
+        }
+    });
+
+    addressButton.addEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+    });
+
+    backaddressButton.addEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+    });
+
+</script>
+
+<!-- <script src="{% static 'js/checkout.js' %}"></script> -->
+
+
+
+
+{% endblock content %}

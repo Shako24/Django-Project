@@ -1,0 +1,116 @@
+{% extends 'userAuth/base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- https://codepen.io/seyedi/pen/zYoeLEv -->
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+
+<section class="mt-3">
+    <div class="container">
+        <h1 class="text-black">
+            Services
+        </h1>
+        <h2 class="text-secondary">
+            Choose your preferred Service
+        </h2>
+    </div>
+</section>
+
+<div class="service">
+    <ul class="cards">
+        <li>
+            <a href="{% url 'carWash' %}" class="card">
+                <img src="{% static 'images/Service/car-wash.png' %}" class="card__image" alt="" />
+                <div class="card__overlay">
+                    <div class="card__header">
+                        <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+                            <path />
+                        </svg>
+                        <div class="card__header-text">
+                            <h3 class="card__title">Car Wash</h3>
+                        </div>
+                    </div>
+                    <p class="card__description">We provide eco-friendly car-washing services by employing waterless
+                        cleaning processes and biodegradable, non-toxic cleaning agents.</p>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'vehiclecare' %}" class="card">
+                <img src="{% static 'images/Service/vehicle-care.png' %}" class="card__image" alt="" />
+                <div class="card__overlay">
+                    <div class="card__header">
+                        <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+                            <path />
+                        </svg>
+                        <div class="card__header-text">
+                            <h3 class="card__title">Car Service</h3>
+                        </div>
+                    </div>
+                    <p class="card__description">Every auto service comes with a one-year/10,000-kilometer warranty.
+                        Whether you choose to purchase OEM or non-OEM parts from us, our warranty policy is hassle-free.
+                        Additionally, the warranty covers labor costs.
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'vehicleInsurance' %}" class="card">
+                <img src="{% static 'images/Service/vehicle-insurance.png' %}" class="card__image" alt="" />
+                <div class="card__overlay">
+                    <div class="card__header">
+                        <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+                            <path />
+                        </svg>
+                        <div class="card__header-text">
+                            <h3 class="card__title">Vehicle Insurance</h3>
+                        </div>
+                    </div>
+                    <p class="card__description">When you step behind the wheel, you will always have peace of mind.
+                        Auto insurance that covers everything and has no hidden fees or any unpleasant surprises.
+                    </p>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'houseKeeping' %}" class="card">
+                <img src="{% static 'images/Service/house-keeping.png' %}" class="card__image" alt="" />
+                <div class="card__overlay">
+                    <div class="card__header">
+                        <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+                            <path />
+                        </svg>
+                        <div class="card__header-text">
+                            <h3 class="card__title">House Maintenance</h3>
+                        </div>
+                    </div>
+                    <p class="card__description">Our cleaning staff is the best in Dubai since they have received
+                        top-notch training and are very efficient at what they do. You can count on us to make your room
+                        pristine and shiny, thats the kind of expert work we guarantee.</p>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'garden' %}" class="card">
+                <img src="{% static 'images/Service/lawn-care.png' %}" class="card__image" alt="" />
+                <div class="card__overlay">
+                    <div class="card__header">
+                        <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+                            <path />
+                        </svg>
+                        <div class="card__header-text">
+                            <h3 class="card__title">Lawn Care</h3>
+                        </div>
+                    </div>
+                    <p class="card__description">So, you have designed your ideal outdoor space and selected the best
+                        soil and grass for the area. How will you preserve its pristine appearance? Book our Lawn Care
+                        package now and keep a regular maintenance schedule to avoid ever again having a boring or
+                        weed-infested lawn!</p>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+{% endblock content %}

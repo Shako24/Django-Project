@@ -1,0 +1,40 @@
+{% extends 'services/vehicleCare.html' %}
+{% load static %}
+
+
+{% block carservice %}
+
+<link rel="stylesheet" href="{% static 'css/prePurchaseInspection.css' %}">
+
+<form action="{% url 'prepurchaseinspection' %}" method="post">
+    {% csrf_token %}
+    <div class=" m-4 rounded-3 overflow-hidden" style="box-shadow: 0 15px 30px 1px grey;">
+        <div class="d-flex flex-column h-100 flex-lg-row gap-2 align-items-stretch">
+            <div class="d-flex flex-row flex-lg-column inspection-img w-100" style="background-image: url({% static 'images/Vehicle-Care/pre purchase inspection.png' %}); background-size: 100% 100%;"></div>
+            <div class="d-flex flex-row flex-lg-column w-100 p-3">
+                <div class="d-flex flex-column h-100 align-items-start">
+                    <div class="row">
+                        <h1>Pre Purchase Inspection</h1>
+                    </div>
+                    <div class="row">
+                        <p>Rapid Care's 420-point pre-purchase vehicle examination is the most thorough way to ensure you're obtaining a dependable and safe automobile. After the inspection, our experts will also provide you with repair costs and an accurate pre-owned vehicle assessment. Certified technicians with decades of experience in auto maintenance and repair conduct our inspections. Our crew inspects all main components, including the transmission, brakes, engine, and electrical systems. Before making recommendations, each component is meticulously inspected and examined. A complete report with easy-to-understand images is provided to illustrate the exact state of each inspected component, allowing you to rest comfortable that the car you're considering meets all requirements.</p>
+                    </div>
+                    <div class="row align-self-end justify-self-end mt-5 mx-3">
+                        <span class="h3 align-items-end">
+                            400.00 AED
+                        </span>
+                    </div>
+                    <div class="row align-self-end justify-self-end m-3">
+                        <button id="inspection-button" type="submit" class="btn btn-danger px-3">
+                            <span class="h3 text-white">Add to Cart</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+{% endblock carservice%}

@@ -1,0 +1,235 @@
+<!-- https://codepen.io/justinklemm/pen/kyMjjv -->
+
+
+<!-- New Cart
+https://codepen.io/ziga-miklic/pen/noZoLo
+-->
+
+{% extends 'userAuth/base.html' %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<!-- NEW CART DESIGN -->
+
+<header id="site-header">
+    <div class="container">
+        <h1>Shopping cart</h1>
+    </div>
+</header>
+
+
+<section id="cart">
+    <div class="container">
+        <form id="cart-update-form" class="d-flex flex-column w-100">
+            {% csrf_token %}
+
+
+            {% for carWash in carWashes %}
+            {% if carWash %}
+            <article class="product d-flex flex-column flex-lg-row">
+                <div class="col-lg-3 col">
+                    <header>
+                        <a class="remove">
+                            <img src="{% static 'images/Service/car-wash.png' %}" alt="">
+                            <h3>Remove service</h3>
+                        </a>
+                    </header>
+                </div>
+
+                <div class="col">
+                    <div class="content">
+                        <h1>Car Wash Service</h1>
+                        <p>{{ carWash.general.description|linebreaks }} </p>
+                    </div>
+                    <footer class="content">
+                        <h2 class="full-price">
+                            {% for service in services %}
+                            {% if service.id == carWash.general_id %}
+                            {{ service.price }} AED
+                            {% endif %}
+                            {% endfor %}
+                        </h2>
+                    </footer>
+                </div>
+                <input type="hidden" name="cwshDel-{{ carWash.id }}" disabled />
+            </article>
+
+            {% endif %}
+            {% endfor %}
+
+
+            {% for houseKeeping in houseKeepings %}
+            {% if houseKeeping %}
+            <article class="product d-flex flex-column flex-lg-row">
+                <div class="col-lg-3 col">
+                    <header>
+                        <a class="remove">
+                            <img src="{% static 'images/Service/house-keeping.png' %}" alt="">
+                            <h3>Remove service</h3>
+                        </a>
+                    </header>
+                </div>
+                <div class="col">
+                    <div class="content">
+                        <h1>House Keeping</h1>
+                        <p class="product-description" style="margin: 0;">
+                            {{houseKeeping.general.description|linebreaks}}
+                        </p>
+                    </div>
+                    <footer class="content">
+                        <h2 class="full-price">
+                            {{ houseKeeping.general.price }} AED
+                        </h2>
+                    </footer>
+                </div>
+                <input type="hidden" name="hskpDel-{{ houseKeeping.pk }}" disabled>
+            </article>
+            {% endif %}
+            {% endfor %}
+
+            {% for garden in gardens %}
+            {% if garden %}
+            <article class="product d-flex flex-column flex-lg-row">
+                <div class="col-lg-3 col">
+                    <header>
+                        <a class="remove">
+                            <img src="{% static 'images/Service/lawn-care.png' %}" alt="">
+                            <h3>Remove service</h3>
+                        </a>
+                    </header>
+                </div>
+
+                <div class="col">
+                    <div class="content">
+                        <h1>Garden Maintenance</h1>
+                        <p class="product-description" style="margin: 0;">{{ garden.general.description|linebreaks }}
+                    </div>
+                    <footer class="content">
+                        <h2 class="full-price">
+                            {{ garden.general.price }} AED
+                        </h2>
+                    </footer>
+                </div>
+                <input type="hidden" name="grdnDel-{{ garden.pk }}" disabled>
+            </article>
+            {% endif %}
+            {% endfor %}
+
+            {% for vehicleInspection in vehicleInspections %}
+            {% if vehicleInspection %}
+            <article class="product d-flex flex-column flex-lg-row">
+                <div class="col-lg-3 col">
+                    <header>
+                        <a class="remove">
+                            <img src="{% static 'images/Vehicle-Care/pre purchase inspection.png' %}" alt="">
+                            <h3>Remove service</h3>
+                        </a>
+                    </header>
+                </div>
+                <div class="col">
+                    <div class="content">
+                        <h1>Vehicle Inspection</h1>
+                        <p>{{ vehicleInspection.description|linebreaks }}</p>
+                    </div>
+                    <footer class="content">
+                        <h2 class="full-price">
+                            {{ vehicleInspection.price }} AED
+                        </h2>
+                    </footer>
+                </div>
+                <input type="hidden" name="vppiDel-{{ vehicleInspection.pk }}" disabled>
+            </article>
+            {% endif %}
+            {% endfor %}
+
+            {% for VehicleMaintenance in VehicleMaintenances %}
+            {% if VehicleMaintenance %}
+            <article class="product d-flex flex-column flex-lg-row">
+                <div class="col-lg-3 col">
+                    <header>
+                        <a class="remove">
+                            <img src="{% static 'images/Vehicle-Care/vehicle-maintenance.png' %}" alt="">
+                            <h3>Remove service</h3>
+                        </a>
+                    </header>
+                </div>
+                <div class="col">
+                    <div class="content">
+                        <h1>Vehicle Maintenance</h1>
+                        <p>Oil Change and maintenance for your vehicle</p>
+                        <p> {{ VehicleMaintenance.description|linebreaks }} </p>
+                    </div>
+                    <footer class="content">
+                        <h2 class="full-price">
+                            {{ VehicleMaintenance.price }} AED
+                        </h2>
+                    </footer>
+                </div>
+                <input type="hidden" name="vhmnDel-{{ VehicleMaintenance.pk }}" disabled>
+            </article>
+            {% endif %}
+            {% endfor %}
+
+        </form>
+
+
+
+        <footer id="site-footer">
+            <div class="container clearfix">
+
+                <div class="left">
+                    <h2 class="subtotal">Subtotal: <span>{{ totalPrice }}</span> AED</h2>
+                    <h3 class="tax">Taxes (5%): <span>{{ totalPrice|mul:0.05|floatformat:2 }}</span> AED</h3>
+                </div>
+
+                <div class="right">
+                    <h1 class="total">Total: <span>{{ totalPrice|mul:1.05|floatformat:2 }} </span> AED</h1>
+                    <a href="{% url 'checkout' %}" type="button" class="checkout-btn">Checkout</a>
+                </div>
+
+            </div>
+        </footer>
+    </div>
+</section>
+<!-- NEW CART DESIGN END -->
+
+<script type="text/javascript">
+    $(document).on('submit', '#cart-update-form', function (e) {
+        e.preventDefault();
+        var myform = $("#cart-update-form")[0]
+        var formData = new FormData(myform);
+        console.log(formData);
+
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                let div = document.createElement("div");
+                $(div).addClass("alert w-75 alert-success alert-dismissible fade show p-2 m-1 d-flex justify-content-between z-3 fs-5");
+                $(div).attr('role', 'alert');
+                $(div).html(data.msg + '<button type="button" class="alert-close" data-dismiss="alert" aria-label="Close">\
+                    <span aria-hidden="true">&times;</span>\
+                    </button>');
+
+                // document.body.append(div)
+
+                $('.messages').append(div)
+
+                let button = $(div).find('button');
+                $(button).click(function () {
+                    $(this).parent().alert('close');
+                })
+            }
+        })
+
+    })
+</script>
+
+<script src="{% static 'js/cart.js' %}"></script>
+
+{% endblock content %}

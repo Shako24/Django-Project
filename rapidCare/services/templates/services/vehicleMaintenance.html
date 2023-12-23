@@ -1,0 +1,125 @@
+{% extends 'services/vehicleCare.html' %}
+{% load static %}
+{% block carservice %}
+
+<link rel="stylesheet" href="{% static 'css/vehicleMaintenance.css' %}">
+<form id="vehiclemaintenance" action="{% url 'vehiclemaintenance' %}" method="post">
+    {% csrf_token %}
+    <fieldset class="p-5">
+        <div class="container">
+            <div class="col">
+                <div class="row justify-content-start mb-5">
+                    <div class="col">
+                        <h1>Vehicle Maintenance</h1>
+                        <h2 class="text-secondary">Select your vehicle below</h2>
+                    </div>
+                </div>
+
+                <div class="row justify-content-evenly justify-content-lg-center gap-3">
+                    <div class="dropdown col col-lg-2">
+                        <button id="make-btn" type="button" class="btn btn-danger dropdown-toggle w-100"
+                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if make == None %}
+                            <span class="d-inline-block w-75">Choose Make</span>
+                            {% else %}
+                            <span class="d-inline-block w-75">{{ make }}</span>
+                            {% endif %}
+
+                        </button>
+                        <div class="w-100 mt-2 p-3 dropdown-menu">
+                            <input type="text" class="form-control w-100" placeholder="Search.."
+                                onkeyup="filterFunction(this)">
+                            <ul id="make-list" class="list-group mt-4 w-100 border border-secondary-subtle">
+                                {% for make in carMakes %}
+                                <li class="make-list-item list-group-item dropdown-item" value="{{ make }}">{{ make }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <input type="hidden" name="make" value="{{ make }}">
+                            <input type="submit" name="makeSubmit" class="d-none">
+                        </div>
+                    </div>
+                    {% if carModels != None or model != None %}
+                    <div class="dropdown col col-lg-2">
+                        <button id="model-btn" type="button" class="btn btn-danger dropdown-toggle w-100"
+                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if model == None %}                            
+                            <span class="d-inline-block w-75">Choose Model</span>
+                            {% else %}                            
+                            <span class="d-inline-block w-75">{{ model }}</span>
+                            {% endif %}                            
+                        </button>
+                        <div class="w-100 mt-2 p-3 dropdown-menu">
+                            <input type="text" class="form-control w-100" placeholder="Search.."
+                                onkeyup="filterFunction(this)">
+                            <ul id="model-list" class="list-group mt-4 w-100 border border-secondary-subtle">
+                                {% for model in carModels %}
+                                <li class="model-list-item list-group-item dropdown-item" value="{{ model }}">{{ model }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <input type="hidden" name="model" value="{{ model }}">
+                        </div>
+                    </div>
+                    <div class="dropdown col col-lg-2">
+                        <button id="year-btn" type="button" class="btn btn-danger dropdown-toggle w-100"
+                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if year == None %}                            
+                            <span class="d-inline-block w-75">Choose Year</span>
+                            {% else %}                            
+                            <span class="d-inline-block w-75">{{ year }}</span>
+                            {% endif %}  
+                        </button>
+                        <div class="w-100 mt-2 p-3 dropdown-menu">
+                            <input type="text" class="form-control w-100" placeholder="Search.."
+                                onkeyup="filterFunction(this)">
+                            <ul id="year-list" class="list-group mt-4 w-100 border border-secondary-subtle">
+                                {% for year in years %}
+                                <li class="year-list-item list-group-item dropdown-item" value="{{ year }}">{{ year }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <input type="hidden" name="year" value="{{ year }}" >
+                            <input type="submit" name="modelSubmit" class="d-none">
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    {% if make != None and model != None %}
+    <fieldset class="p-5">
+    {% else %}
+    <fieldset class="p-5 d-none">
+    {% endif %}
+        <div class=" m-4 rounded-3 overflow-hidden" style="box-shadow: 0 15px 30px 1px grey;">
+            <div class="d-flex flex-column h-100 flex-lg-row gap-2 align-items-stretch">
+                <div class="d-flex flex-row flex-lg-column w-100 maintenance-img" style="background-image: url({% static 'images/Vehicle-Care/vehicle-maintenance.png' %}); background-size: 100% 100%;"></div>
+                <div class="d-flex flex-row flex-lg-column w-100 p-3">
+                    <div class="d-flex flex-column h-100 align-items-start">
+                        <div class="row">
+                            <h1>Vehicle Maintenance</h1>
+                        </div>
+                        <div class="row">
+                            <!-- <p>Brand : {{ make }} <br>Model: {{ model }} <br> Year: {{ year }}</p> -->
+                            <p>Rapid Care makes it simple to service your vehicle. We offer efficient and trustworthy oil change and maintenance services to keep your vehicle operating efficiently. As part of our services, we test automotive components such as the brakes, suspension, steering, and tyres to ensure they are in excellent shape. Our licenced specialists will come to your location to finish the service and offer expert guidance on how to maintain your vehicle for best performance.</p>
+                        </div>
+                        <div class="row align-self-end justify-self-end mt-5 mx-2 text-start"><span class="h3">{{ price }} AED</span></div>
+                        <div class="row align-self-end justify-self-end m-3">
+                            <button id="maintenance-button" type="submit" name="priceSubmit" class="btn btn-danger">
+                                <span class="h3 text-light">Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    
+</form>
+
+
+<script src="{% static 'js/vehicleMaintenance.js' %}"></script>
+
+{% endblock carservice %}

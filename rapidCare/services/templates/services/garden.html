@@ -1,0 +1,155 @@
+{% extends 'userAuth/base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/garden.css' %}">
+<div class="d-none d-lg-flex"
+	style="width: 100%; height: 350px;  background: rgba(0, 0, 0, 0.034); justify-content: space-evenly; align-items: center;">
+	<img src="{% static 'images/Lawn_Care.png' %}" alt="logo" height="100%">
+</div>
+<div class="d-flex gap-3">
+	<div class="col">
+		<form action="{% url 'garden' %}" method="post">
+			{% csrf_token %}
+			<div id="container">
+				<div class="product-details">
+					<div class="row mb-3">
+						<div class="col-2">
+							<h1>Lite</h1>
+						</div>
+						<div class="col d-flex flex-column align-items-end" style="gap: 0.05rem;">
+							<span class="bg-danger rounded-2 border border-0 p-1 text-white text-center"
+								style="font-size: x-small; font-weight: bold; width: fit-content;">
+								Free consultation from <br> Certified Agricultural Engineer
+							</span>
+						</div>
+					</div>
+					<p class="information">Get a lush lawn effortlessly with Company's lite gardening package. Our team
+						visits once a week for 1-hour sessions to trim, and prune up to 120 sqm of lawn. Grass edges are
+						trimmed, and garden areas are cleaned. Enjoy a stunning backyard without any fuss!
+					</p>
+
+					<div class="control">
+						<span>Price {{ litePrice }}AED </span>
+						<button class="btn btn-success" name="liteSubmit" type="submit">Add to Cart</button>
+					</div>
+				</div>
+				<div class="product-image d-none d-sm-inline-block">
+					<img src="{% static 'images/lite.png' %}" alt="">
+					<div class="info">
+						<h2> Description</h2>
+						<hr class="mb-2">
+						<ul>
+							<li> 1 Visits of Gardener per week </li>
+							<li> Upto 1 hour visit </li>
+							<li> Garden area cleaning </li>
+							<li> Grass edge trimming </li>
+							<li> Cutting and shaping of plants - Monthly </li>
+							<li> Monthly fertilizer application - (Provided by client) </li>
+							<li> Monthly pesticide application </li>
+							<li> (Provided by client) </li>
+							<li> This package covers garden area </li>
+							<li> up-to 120 sqm </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="container">
+				<div class="product-details">
+					<div class="row mb-3">
+						<div class="col-5">
+							<h1>Lite Plus</h1>
+						</div>
+						<div class="col d-flex flex-column align-items-end" style="gap: 0.05rem;">
+							<span class="bg-danger rounded-2 border border-0 p-1 text-white text-center"
+								style="font-size: x-small; font-weight: bold; width: fit-content;">
+								Free consultation from <br> Certified Agricultural Engineer
+							</span>
+						</div>
+					</div>
+					<p class="information">Our Lite Plus package offers comprehensive garden maintenance with 3 weekly
+						gardener visits, grass edge trimming, plant cutting and shaping, hard surface area washing, and
+						natural grass cutting. This package also includes garden area cleaning, air blower cleaning,
+						weed removal, and monthly fertilizer and pesticide application. Ideal for gardens up to 200 sqm.
+					</p>
+
+					<div class="control">
+						<span>Price {{ litePlusPrice }}AED </span>
+						<button class="btn btn-success" name="litePlusSubmit" type="submit">Add to Cart</button>
+					</div>
+				</div>
+				<div class="product-image d-none d-sm-inline-block">
+					<img src="{% static 'images/litePlus.png' %}" alt="">
+					<div class="info">
+						<h2> Description</h2>
+						<hr class="mb-2">
+						<ul>
+							<li> 3 Visits of Gardener per week </li>
+							<li> Upto 40 minutes visit </li>
+							<li> Garden area cleaning </li>
+							<li> Grass edge trimming </li>
+							<li> Cutting and shaping of plants - Monthly </li>
+							<li> Hard surface area washing </li>
+							<li> Air Blower cleaning every visit </li>
+							<li> Monthly fertilizer application - (Provided by client) </li>
+							<li> Monthly pesticide application - (Provided by client) </li>
+							<li> Natural Grass Cutting (Monthly) </li>
+							<li> This package covers garden area up-to 200 sqm </li>
+							<li> Removing Weeds from the garden </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="container">
+				<div class="product-details">
+					<div class="row mb-3">
+						<div class="col-4">
+							<h1>Premium</h1>
+						</div>
+						<div class="col d-flex flex-column align-items-end" style="gap: 0.05rem;">
+							<span class="bg-danger rounded-2 border border-0 p-1 text-white text-center"
+								style="font-size: x-small; font-weight: bold; width: fit-content;">
+								Free consultation from <br> Certified Agricultural Engineer
+							</span>
+						</div>
+					</div>
+					<p class="information">Company's Premium package provides top-notch garden maintenance with 4 weekly
+						gardener visits, plant cutting and shaping every 15 days, natural grass cutting on a bi-weekly
+						basis, and irrigation maintenance (excluding pump system). This package also includes garden
+						area cleaning, grass edge trimming, hard surface area washing, air blower cleaning, weed
+						removal, and monthly fertilizer and pesticide application. Ideal for gardens up to 250 sqm.</p>
+					<div class="control">
+						<span>Price {{ premiumPrice }}AED </span>
+						<button class="btn btn-success" name="premiumSubmit" type="submit">Add to Cart</button>
+					</div>
+				</div>
+				<div class="product-image d-none d-sm-inline-block">
+					<img src="{% static 'images/premium.png' %}" alt="">
+					<div class="info">
+						<h2> Description</h2>
+						<hr class="mb-2">
+						<ul>
+							<li> 4 Visits of Gardener per week </li>
+							<li> Upto 60 minutes visit </li>
+							<li> Garden area cleaning </li>
+							<li> Grass edge trimming </li>
+							<li> Cutting and shaping of plants - Every 15 days </li>
+							<li> Hard surface area washing </li>
+							<li> Air Blower cleaning every visit </li>
+							<li> Monthly fertilizer application - (Provided by client) </li>
+							<li> Monthly pesticide application - (Provided by client) </li>
+							<li> Natural Grass Cutting (Bi-Weekly Basis) </li>
+							<li> Irrigation Maintenance with all fittings (Pipes, sprinklers, dippers). (Pump system
+								excluded) </li>
+							<li> This package covers garden area of up-to 250 sqm </li>
+							<li> Removing Weeds from the garden </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script src="{% static 'js/garden.js' %}"></script>
+{% endblock content %}

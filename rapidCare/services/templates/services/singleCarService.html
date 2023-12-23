@@ -1,0 +1,600 @@
+{% extends 'services/car_wash.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block carservice %}
+
+<link rel="stylesheet" href="{% static 'css/singleCarService.css' %}">
+
+<section class="m-5">
+    <div class="container">
+        <h1 class="text-black">One Time Car Wash</h1>
+        <h2 class="text-secondary">Choose Your Preferred Services</h2>
+    </div>
+</section>
+
+<form action="{% url 'singleCarWash' %}" method="post">
+    {% csrf_token %}
+    <fieldset class="w-100 d-flex flex-column align-items-center">
+        <div class="w-75 m-4 rounded-3 overflow-hidden" style="box-shadow: 0 15px 30px 1px grey; min-height: 350px;">
+            <div class="d-flex flex-column h-100 flex-lg-row gap-2">
+                <div class="d-flex flex-row flex-lg-column w-100 product-img" style=" background-size: 100% 100%; background-image: url({% static 'images/car-wash/basic exterior wash.png' %});"></div>
+                <div class="d-flex flex-row flex-lg-column w-100 p-3">
+                <div class="col position-relative">
+                        <div class="row">
+                            <h1 class="fw-bold" >Basic Exterior Wash</h1>
+                        </div>
+                        <div class="row">
+                            <p>New waterless & eco-friendly wash.</p>
+                            <span>Starting from <strong>AED{{ basicExteriorWashPrice }}</strong></span>
+                        </div>
+                        <div class="row w-100 justify-content-end addDiv bottom-0">
+                            <button id="cwsh-btn-0" class="btn btn-danger w-50 " name="exteriorCarWash" type="button" onclick="showOption(0)">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div id="basicExteriorWashOption" class="serviceSelect row mt-2">
+                            <div class="serviceSelectItem"
+                                style="border-bottom: 2px solid rgba(51, 51, 51, 0.249); padding-bottom: 5px;">
+                                <div class="service-info">
+                                    <span class="car-type">Sedan</span>
+                                    <span style="font-weight: bold;">price: AED{{ basicExteriorWashPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(0)">-</button>
+                                    <input type="text" name="basicExteriorWash" id="basicExteriorWash" value='0'>
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(0)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="serviceSelectItem">
+                                <div class="service-info">
+                                    <span class="car-type">SUV</span>
+                                    <span style="font-weight: bold;">price: AED{{ basicExteriorWashSUVPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(1)">-</button>
+                                    <input type="text" name="basicExteriorWashSUV" id="basicExteriorWashSUV" value="0">
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(1)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="container">
+            <div class="product-details-1">
+                <div class="product-image">
+                    <img src="{% static 'images/lite.png' %}" alt="">
+                </div>
+                <div class="service_detail-1">
+                    <h1>Interior Cleaning</h1>
+                    <span class="hint-star star">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </span>
+                    <p class="information">" Vacuum treatment and polishing for your cars interior.</p>
+                    <div class="control-1">
+                        <button id="cwsh-btn-1" class="cwsh-btn" name="exteriorCarWash" type="button" onclick="showOption(1)">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="interiorCleaningOption" class="serviceSelect">
+                <div class="serviceSelectItem"
+                    style="border-bottom: 2px solid rgba(51, 51, 51, 0.249); padding-bottom: 5px;">
+                    <div class="service-info">
+                        <span class="car-type">Sedan</span>
+                        <span style="font-weight: bold;">price: AED{{ interiorCleaningPrice }}</span>
+                    </div>
+                    <div class="serviceCounter">
+                        <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(2)">-</button>
+                        <input type="text" name="interiorCleaning" id="interiorCleaning" value='0'>
+                        <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(2)">
+                            +
+                        </button>
+                    </div>
+                </div>
+                <div class="serviceSelectItem">
+                    <div class="service-info">
+                        <span class="car-type">SUV</span>
+                        <span style="font-weight: bold;">price: AED{{ interiorCleaningSUVPrice }}</span>
+                    </div>
+                    <div class="serviceCounter">
+                        <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(3)">-</button>
+                        <input type="text" name="interiorCleaningSUV" id="interiorCleaningSUV" value="0">
+                        <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(3)">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div> -->
+        <div class="w-75 m-4 rounded-3 overflow-hidden" style="box-shadow: 0 15px 30px 1px grey; min-height: 350px;">
+            <div class="d-flex flex-column flex-lg-row gap-2">
+                <div class="d-flex flex-row flex-lg-column w-100 w-lg-50 product-img" style=" background-size: 100% 100%; background-image: url({% static 'images/car-wash/interior cleaning.png' %});"></div>
+                <div class="d-flex flex-row flex-lg-column w-100 w-lg-50 p-3">
+                    <div class="col position-relative">
+                        <div class="row">
+                            <h1 class="fw-bold">Interior Cleaning</h1>
+                        </div>
+                        <div class="row">
+                            <p>Vacuum treatment and polishing for your cars interior.</p>
+                            <span>Starting from <strong>AED{{ interiorCleaningPrice }}</strong></span>
+                        </div>
+                        <div class="row w-100 justify-content-end addDiv bottom-0">
+                            <button id="cwsh-btn-1" class="btn btn-danger w-50" name="exteriorCarWash" type="button" onclick="showOption(1)">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div id="interiorCleaningOption" class="serviceSelect row mt-2">
+                            <div class="serviceSelectItem"
+                                style="border-bottom: 2px solid rgba(51, 51, 51, 0.249); padding-bottom: 5px;">
+                                <div class="service-info">
+                                    <span class="car-type">Sedan</span>
+                                    <span style="font-weight: bold;">price: AED{{ interiorCleaningPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(2)">-</button>
+                                    <input type="text" name="interiorCleaning" id="interiorCleaning" value='0'>
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(2)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="serviceSelectItem">
+                                <div class="service-info">
+                                    <span class="car-type">SUV</span>
+                                    <span style="font-weight: bold;">price: AED{{ interiorCleaningSUVPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(3)">-</button>
+                                    <input type="text" name="interiorCleaningSUV" id="interiorCleaningSUV" value="0">
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(3)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="container">
+            <div class="product-details-1">
+                <div class="product-image">
+                    <img src="{% static 'images/lite.png' %}" alt="">
+                </div>
+                <div class="service_detail-1">
+                    <h1>Basic Exterior With Interior Cleaning</h1>
+                    <span class="hint-star star">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </span>
+                    <p class="information">" Let's spread the joy , here is Christmas , the most awaited day of the
+                        year.Christmas Tree is what one need the most.</p>
+                    <div class="control-1">
+                        <button id="cwsh-btn-2" class="cwsh-btn" name="exteriorCarWash" type="button" onclick="showOption(2)">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="BasicExteriorWithinteriorCleaningOption" class="serviceSelect">
+                <div class="serviceSelectItem"
+                    style="border-bottom: 2px solid rgba(51, 51, 51, 0.249); padding-bottom: 5px;">
+                    <div class="service-info">
+                        <span class="car-type">Sedan</span>
+                        <span style="font-weight: bold;">price: AED{{ BasicExteriorWithinteriorCleaningPrice }}</span>
+                    </div>
+                    <div class="serviceCounter">
+                        <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(4)">-</button>
+                        <input type="text" name="BasicExteriorWithinteriorCleaning" id="BasicExteriorWithinteriorCleaning"
+                            value='0'>
+                        <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(4)">
+                            +
+                        </button>
+                    </div>
+                </div>
+                <div class="serviceSelectItem">
+                    <div class="service-info">
+                        <span class="car-type">SUV</span>
+                        <span style="font-weight: bold;">price: AED{{ BasicExteriorWithinteriorCleaningSUVPrice }}</span>
+                    </div>
+                    <div class="serviceCounter">
+                        <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(5)">-</button>
+                        <input type="text" name="BasicExteriorWithinteriorCleaningSUV" id="BasicExteriorWithinteriorCleaningSUV"
+                            value="0">
+                        <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(5)">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div> -->
+        <div class="w-75 m-4 rounded-3 overflow-hidden" style="box-shadow: 0 15px 30px 1px grey; min-height: 350px;">
+            <div class="d-flex flex-column flex-lg-row gap-2">
+                <div class="d-flex flex-row flex-lg-column w-100 product-img" style=" background-size: 100% 100%; background-image: url({% static 'images/car-wash/basic exterior + interior cleaning.png' %});"></div>
+                <div class="d-flex flex-row flex-lg-column w-100 p-3">
+                    <div class="col position-relative">
+                        <div class="row">
+                            <h1 class="fw-bold">Basic Exterior With Interior Cleaning</h1>
+                        </div>
+                        <div class="row">
+                            <p>New waterless & eco-friendly wash. <br>Vacuum treatment and polishing for your cars interior.</p>
+                            <span>Starting from <strong>AED{{ BasicExteriorWithinteriorCleaningPrice }}</strong></span>
+                        </div>
+                        <div class="row w-100 justify-content-end addDiv bottom-0">
+                            <button id="cwsh-btn-2" class="btn btn-danger w-50" name="exteriorCarWash" type="button" onclick="showOption(2)">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div id="BasicExteriorWithinteriorCleaningOption" class="serviceSelect row mt-2">
+                            <div class="serviceSelectItem"
+                                style="border-bottom: 2px solid rgba(51, 51, 51, 0.249); padding-bottom: 5px;">
+                                <div class="service-info">
+                                    <span class="car-type">Sedan</span>
+                                    <span style="font-weight: bold;">price: AED{{ BasicExteriorWithinteriorCleaningPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(4)">-</button>
+                                    <input type="text" name="BasicExteriorWithinteriorCleaning" id="BasicExteriorWithinteriorCleaning" value='0'>
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(4)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="serviceSelectItem">
+                                <div class="service-info">
+                                    <span class="car-type">SUV</span>
+                                    <span style="font-weight: bold;">price: AED{{ BasicExteriorWithinteriorCleaningSUVPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(5)">-</button>
+                                    <input type="text" name="BasicExteriorWithinteriorCleaningSUV" id="BasicExteriorWithinteriorCleaningSUV" value="0">
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(5)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="container">
+            <div class="product-details-1">
+                <div class="product-image">
+                    <img src="{% static 'images/lite.png' %}" alt="">
+                </div>
+                <div class="service_detail-1">
+                    <h1>Exterior Wash With Wax</h1>
+                    <span class="hint-star star">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </span>
+                    <p class="information">"Make your car shimmer, shine & sparkle.</p>
+                    <div class="control-1">
+                        <button id="cwsh-btn-3" class="cwsh-btn" name="exteriorCarWash" type="button" onclick="showOption(3)">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="exteriorWashWithWaxOption" class="serviceSelect">
+                <div class="serviceSelectItem"
+                    style="border-bottom: 2px solid rgba(51, 51, 51, 0.249); padding-bottom: 5px;">
+                    <div class="service-info">
+                        <span class="car-type">Sedan</span>
+                        <span style="font-weight: bold;">price: AED{{ exteriorWashWithWaxPrice }}</span>
+                    </div>
+                    <div class="serviceCounter">
+                        <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(6)">-</button>
+                        <input type="text" name="exteriorWashWithWax" id="exteriorWashWithWax" value='0'>
+                        <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(6)">
+                            +
+                        </button>
+                    </div>
+                </div>
+                <div class="serviceSelectItem">
+                    <div class="service-info">
+                        <span class="car-type">SUV</span>
+                        <span style="font-weight: bold;">price: AED{{ exteriorWashWithWaxSUVPrice }}</span>
+                    </div>
+                    <div class="serviceCounter">
+                        <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(7)">-</button>
+                        <input type="text" name="exteriorWashWithWaxSUV" id="exteriorWashWithWaxSUV" value="0">
+                        <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(7)">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div> -->
+        <div class="w-75 m-4 rounded-3 overflow-hidden" style="box-shadow: 0 15px 30px 1px grey; min-height: 350px;">
+            <div class="d-flex flex-column flex-lg-row gap-2">
+                <div class="d-flex flex-row flex-lg-column w-100 w-lg-50 product-img" style=" background-size: 100% 100%; background-image: url({% static 'images/car-wash/exterior wash with wax.png' %});"></div>
+                <div class="d-flex flex-row flex-lg-column w-100 w-lg-50 p-3">
+                    <div class="col position-relative">
+                        <div class="row">
+                            <h1 class="fw-bold">Exterior Wash With Wax</h1>
+                        </div>
+                        <div class="row">
+                            <p>Make your car shimmer, shine & sparkle.</p>
+                            <span>Starting from <strong>AED{{ exteriorWashWithWaxPrice }}</strong></span>
+                        </div>
+                        <div class="row w-100 justify-content-end addDiv bottom-0">
+                            <button id="cwsh-btn-3" class="btn btn-danger w-50" name="exteriorCarWash" type="button" onclick="showOption(3)">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div id="exteriorWashWithWaxOption" class="serviceSelect row mt-2">
+                            <div class="serviceSelectItem"
+                                style="border-bottom: 2px solid rgba(51, 51, 51, 0.249); padding-bottom: 5px;">
+                                <div class="service-info">
+                                    <span class="car-type">Sedan</span>
+                                    <span style="font-weight: bold;">price: AED{{ exteriorWashWithWaxPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(6)">-</button>
+                                    <input type="text" name="exteriorWashWithWax" id="exteriorWashWithWax" value='0'>
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(6)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="serviceSelectItem">
+                                <div class="service-info">
+                                    <span class="car-type">SUV</span>
+                                    <span style="font-weight: bold;">price: AED{{ exteriorWashWithWaxSUVPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(7)">-</button>
+                                    <input type="text" name="exteriorWashWithWaxSUV" id="exteriorWashWithWaxSUV" value="0">
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(7)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="container">
+            <div class="product-details-1">
+                <div class="product-image">
+                    <img src="{% static 'images/lite.png' %}" alt="">
+                </div>
+                <div class="service_detail-1">
+                    <h1>Super Dirty Exterior Wash</h1>
+                    <span class="hint-star star">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </span>
+                    <p class="information">"Waterless, eco-friendly wash for dirtier/offroad cars.</p>
+                    <div class="control-1">
+                        <button id="cwsh-btn-4" class="cwsh-btn" name="exteriorCarWash" type="button" onclick="showOption(4)">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="superDirtyExteriorWashOption" class="serviceSelect">
+                <div class="serviceSelectItem"
+                    style="border-bottom: 2px solid rgba(51, 51, 51, 0.249); padding-bottom: 5px;">
+                    <div class="service-info">
+                        <span class="car-type">Sedan</span>
+                        <span style="font-weight: bold;">price: AED{{ superDirtyExteriorWashPrice }}</span>
+                    </div>
+                    <div class="serviceCounter">
+                        <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(8)">-</button>
+                        <input type="text" name="superDirtyExteriorWash" id="superDirtyExteriorWash" value='0'>
+                        <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(8)">
+                            +
+                        </button>
+                    </div>
+                </div>
+                <div class="serviceSelectItem">
+                    <div class="service-info">
+                        <span class="car-type">SUV</span>
+                        <span style="font-weight: bold;">price: AED{{ superDirtyExteriorWashSUVPrice }}</span>
+                    </div>
+                    <div class="serviceCounter">
+                        <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(9)">-</button>
+                        <input type="text" name="superDirtyExteriorWashSUV" id="superDirtyExteriorWashSUV" value="0">
+                        <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(9)">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="w-75 m-4 rounded-3 overflow-hidden" style="box-shadow: 0 15px 30px 1px grey; min-height: 350px;">
+            <div class="d-flex flex-column flex-lg-row gap-2">
+                <div class="d-flex flex-row flex-lg-column w-100 w-lg-50 product-img" style=" background-size: 100% 100%; background-image: url({% static 'images/car-wash/super dirty exterior wash.png' %});"></div>
+                <div class="d-flex flex-row flex-lg-column w-100 w-lg-50 p-3">
+                    <div class="col position-relative">
+                        <div class="row">
+                            <h1 class="fw-bold">Super Dirty Exterior Wash</h1>
+                        </div>
+                        <div class="row">
+                            <p>Pressure water wash for dirtier/offroad cars.</p>
+                            <span>Starting from <strong>AED{{ superDirtyExteriorWashPrice }}</strong></span>
+                        </div>
+                        <div class="row w-100 justify-content-end addDiv bottom-0">
+                            <button id="cwsh-btn-4" class="btn btn-danger w-50" name="exteriorCarWash" type="button" onclick="showOption(4)">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div id="superDirtyExteriorWashOption" class="serviceSelect row mt-2">
+                            <div class="serviceSelectItem"
+                                style="border-bottom: 2px solid rgba(51, 51, 51, 0.249); padding-bottom: 5px;">
+                                <div class="service-info">
+                                    <span class="car-type">Sedan</span>
+                                    <span style="font-weight: bold;">price: AED{{ superDirtyExteriorWashPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(8)">-</button>
+                                    <input type="text" name="superDirtyExteriorWash" id="superDirtyExteriorWash" value='0'>
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(8)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="serviceSelectItem">
+                                <div class="service-info">
+                                    <span class="car-type">SUV</span>
+                                    <span style="font-weight: bold;">price: AED{{ superDirtyExteriorWashSUVPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(9)">-</button>
+                                    <input type="text" name="superDirtyExteriorWashSUV" id="superDirtyExteriorWashSUV" value="0">
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(9)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="container">
+            <div class="product-details-1">
+                <div class="product-image">
+                    <img src="{% static 'images/lite.png' %}" alt="">
+                </div>
+                <div class="service_detail-1">
+                    <h1>Engine Detailing</h1>
+                    <span class="hint-star star">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </span>
+                    <p class="information">"Professional degreasing of engine's exterior.</p>
+                    <div class="control-1">
+                        <button id="cwsh-btn-5" class="cwsh-btn" name="exteriorCarWash" type="button" onclick="showOption(5)">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="engineDetailingOption" class="serviceSelect">
+                <div class="serviceSelectItem"
+                    style="border-bottom: 2px solid rgba(51, 51, 51, 0.249); padding-bottom: 5px;">
+                    <div class="service-info">
+                        <span class="car-type">Sedan</span>
+                        <span style="font-weight: bold;">price: AED{{ engineDetailingPrice }}</span>
+                    </div>
+                    <div class="serviceCounter">
+                        <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(10)">-</button>
+                        <input type="text" name="engineDetailing" id="engineDetailing" value='0'>
+                        <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(10)">
+                            +
+                        </button>
+                    </div>
+                </div>
+                <div class="serviceSelectItem">
+                    <div class="service-info">
+                        <span class="car-type">SUV</span>
+                        <span style="font-weight: bold;">price: AED{{ engineDetailingSUVPrice }}</span>
+                    </div>
+                    <div class="serviceCounter">
+                        <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(11)">-</button>
+                        <input type="text" name="engineDetailingSUV" id="engineDetailingSUV" value="0">
+                        <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(11)">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="w-75 m-4 rounded-3 overflow-hidden" style="box-shadow: 0 15px 30px 1px grey; min-height: 350px;">
+            <div class="d-flex flex-column flex-lg-row gap-2">
+                <div class="d-flex flex-row flex-lg-column w-100 w-lg-50 product-img" style=" background-size: 100% 100%; background-image: url({% static 'images/car-wash/engine detailing.png' %});"></div>
+                <div class="d-flex flex-row flex-lg-column w-100 w-lg-50 p-3">
+                    <div class="col position-relative">
+                        <div class="row">
+                            <h1 class="fw-bold">Engine Detailing</h1>
+                        </div>
+                        <div class="row">
+                            <p>"Professional degreasing of engine's exterior.</p>
+                            <span>Starting from <strong>AED{{ engineDetailingPrice }}</strong></span>
+                        </div>
+                        <div class="row w-100 justify-content-end addDiv bottom-0">
+                            <button id="cwsh-btn-5" class="btn btn-danger w-50" name="exteriorCarWash" type="button" onclick="showOption(5)">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div id="engineDetailingOption" class="serviceSelect row mt-2">
+                            <div class="serviceSelectItem"
+                                style="border-bottom: 2px solid rgba(51, 51, 51, 0.249); padding-bottom: 5px;">
+                                <div class="service-info">
+                                    <span class="car-type">Sedan</span>
+                                    <span style="font-weight: bold;">price: AED{{ engineDetailingPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(10)">-</button>
+                                    <input type="text" name="engineDetailing" id="engineDetailing" value='0'>
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(10)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="serviceSelectItem">
+                                <div class="service-info">
+                                    <span class="car-type">SUV</span>
+                                    <span style="font-weight: bold;">price: AED{{ engineDetailingSUVPrice }}</span>
+                                </div>
+                                <div class="serviceCounter">
+                                    <button type="button" class="serviceNumber serviceNumber-left" onclick="buttonMinus(11)">-</button>
+                                    <input type="text" name="engineDetailingSUV" id="engineDetailingSUV" value="0">
+                                    <button type="button" class="serviceNumber serviceNumber-right" onclick="buttonAdd(11)">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        </div>
+        <!-- <button type="submit">Checkout</button> -->
+        <div class="row-3 align-self-end mx-3">
+            <button type="submit" class="next">
+                NEXT
+            </button>
+        </div>
+    </fieldset>
+</form>
+
+
+
+<script src="{% static 'js/customSelect.js' %}"></script>
+<script src="{% static 'js/singleCarService.js' %}"></script>
+
+{% endblock carservice %}

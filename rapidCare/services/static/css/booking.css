@@ -1,0 +1,50 @@
+.timeList {
+  border: 1px solid #555;
+}
+
+.timeList:hover {
+  border: 1px solid red;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+}
+
+.sub-timeList:hover {
+  border: 1px solid red;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+}
+
+.timeList.time-active {
+  border: 1px solid red;
+  background-color: red;
+  color: white;
+}
+
+.sub-timeList.time-active {
+  border: 1px solid red;
+  background-color: red;
+  color: white;
+}
+
+.summary-span {
+  font-size: larger;
+  font-weight: 600;
+  font-size: 15px;
+  color: #555;
+}
+
+.changeButton:hover {
+  background-color: red;
+}
+
+.booking-summary {
+  width: 75%;
+}
+
+@media screen and (max-width: 800px) {
+  .booking-summary {
+    width: 100%;
+  }
+}
