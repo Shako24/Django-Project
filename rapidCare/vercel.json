@@ -13,5 +13,8 @@
       "dest": "rapidCare/vercel_handler.py",
       "headers": { "script": "auto" }
     }
-  ]
+  ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "rapidCare.settings"
+  }
 }
