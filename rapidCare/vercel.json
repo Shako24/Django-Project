@@ -1,19 +1,28 @@
 {
+  "version": 2,
   "builds": [
     {
-      "src": "rapidCare",
+      "src": "rapidCare/wsgi.py",
       "use": "@vercel/python",
       "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+    },
+    {
+      "src": "build_files.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles_build"
+      }
     }
   ],
   "routes": [
     {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "rapidCare/vercel_handler.py",
-      "headers": { "script": "auto" }
+      "dest": "rapidCare/wsgi.py"
     }
-  ],
-  "env": {
-    "DJANGO_SETTINGS_MODULE": "rapidCare.settings"
-  }
+  ]
 }
+
