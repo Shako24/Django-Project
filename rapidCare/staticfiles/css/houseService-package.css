@@ -1,0 +1,51 @@
+.options {
+  background-color: white;
+  color: black;
+  border: 2px solid #555;
+  cursor: pointer;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+  border-radius: 100%;
+}
+
+
+.options:hover {
+  background-color: var(--red);
+  color: white;
+  border: 1px solid var(--red);
+}
+
+.selected.options {
+  background-color: var(--red);
+  color: white;
+  border: 1px solid var(--red);
+}
+
+
+
+.supplies {
+  height: 200px;
+  width: 500px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: none;
+  outline: none;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+  
+}
+
+.selected.supplies {
+  background-color: var(--red);
+  color: white;
+  border: 1px solid var(--red);
+}
+
+@media screen and (max-width: 500px) {
+  .supplies {
+    height: 150px;
+    width: 300px;
+  }
+} 

@@ -1,0 +1,528 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css);
+
+body {
+  --summer-green: #1fb796;
+  --dark-green: #1ba385;
+  --opal: #cdf4ec;
+  --jagged-ice: #93e2d1;
+  --default-radius: 10px;
+}
+
+.index_div {
+  display: flex;
+  position: absolute;
+  height: 220px;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  background-color: var(--red);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.index-heading {
+  font-size: 4.5vw;
+  color: white;
+  font-weight: bolder;
+  font-family:'League Spartan';
+}
+
+.index-semi-heading {
+  font-size: 1.7vw;
+}
+
+.index-select {
+  text-align: center;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  height: 45px;
+}
+
+.service_div {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  z-index: 2;
+  height: 200px;
+  margin-top: 190px;
+  width: 80%;
+  background-color: white;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+  border-radius: 20px;
+  justify-content: space-evenly;
+  color: #000;
+  overflow: auto;
+  padding: 5px;
+}
+
+.service_div a {
+  display: inline-flex;
+  height: 80%;
+  align-items: center;
+  animation: fade-in-top 1s;
+}
+
+span {
+  font-size: 16px;
+  color: #5555558f;
+  font-weight: bolder;
+}
+
+h1 {
+  color: var(--red);
+  font-weight: bolder;
+}
+
+/* serach box */
+.form {
+  position: relative;
+  height: 100%;
+  width: 70%;
+}
+
+.form span {
+  position: absolute;
+  right: 17px;
+  top: 13px;
+  padding: 2px;
+  border-left: 1px solid #d1d5db;
+}
+
+.left-pan {
+  padding-left: 7px;
+}
+
+.left-pan i {
+  padding-left: 10px;
+}
+
+.form-input {
+  height: 100%;
+  text-indent: 2vw;
+  border-radius: 10px;
+  box-shadow: none;
+  border: none;
+  background-color: transparent;
+}
+
+.form-input:focus {
+  box-shadow: none;
+  border: none;
+}
+
+.container-component {
+  width: 100%;
+  height: 420px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.container-component2 {
+  height: auto;
+  justify-content: center;
+  background-color: transparent;
+  position: relative;
+  padding: 20px;
+}
+
+.container-component2 i {
+  margin-top: 10px;
+  width: auto;
+  color: var(--red);
+}
+
+.container-component3 {
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 10vh 20vh 0 20vh;
+  border-top-left-radius: 90px;
+  border-top-right-radius: 90px;
+  background-color: #8080801f;
+}
+
+.container-component3 button {
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+  background-color: var(--red);
+  border: 3px solid white;
+  width: 75%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.container-component3 button span {
+  color: white;
+}
+
+/* .container-component3 span {
+  color: black;
+} */
+
+.container-component4 {
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 90px;
+  border-top-right-radius: 90px;
+  background-color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+/* multi buttons design */
+
+.container-component2 button {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  margin: 0px;
+  padding: 14px 0px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  width: 100%;
+  letter-spacing: 1px;
+  background-color: white;
+  transition: background-color 250ms ease-in-out, transform 150ms ease;
+}
+
+.container-component2 button:first-child {
+  border-top-left-radius: var(--default-radius);
+  border-bottom-left-radius: var(--default-radius);
+}
+
+.container-component2 button:last-child {
+  border-top-right-radius: var(--default-radius);
+  border-bottom-right-radius: var(--default-radius);
+}
+
+.container-component2 button:hover {
+  background-color: var(--red);
+  color: white;
+  transition: 0.2s;
+}
+
+.company-btn.selected {
+  background-color: var(--red);
+  color: white;
+  animation: none;
+}
+
+/* Get in Touch */
+.company-info {
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.company-info-1 {
+  height: 100%;
+  width: 45vw;
+}
+
+.company-info-2 {
+  height: 100%;
+  width: 45vw;
+}
+
+.company-info-3 {
+  height: 100%;
+  width: 45vw;
+}
+
+.company-info-video {
+  height: 300px;
+  max-width: 45vw;
+}
+
+.ceo-statement {
+  font-size: 20px;
+}
+
+.value {
+  display: grid;
+  grid-template-columns: 250px 250px 250px;
+  gap: 1rem 6rem;
+  margin: 2rem;
+  padding: 0;
+  list-style-type: none;
+  width: 65%;
+  justify-content: center;
+  justify-items: center;
+}
+
+.value .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  width: 280px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0.8px 0.2px 2.2px rgba(0, 0, 0, -0.03),
+    2px 0.5px 5.3px rgba(0, 0, 0, -0.03), 3.8px 0.9px 10px rgba(0, 0, 0, -0.011),
+    6.7px 1.6px 17.9px rgba(0, 0, 0, 0.023),
+    12.5px 2.9px 33.4px rgba(0, 0, 0, 0.069), 30px 7px 80px rgba(0, 0, 0, 0.13);
+  padding: 10px;
+  row-gap: 10px;
+  animation: fade-in-top 1;
+}
+
+.value .content img {
+  width: 50px;
+  height: 50px;
+  margin-top: 10px;
+}
+
+.value .content p {
+  font-size: 16px;
+}
+
+.value .content h1 {
+  font-size: 25px;
+}
+
+.multi-button {
+  display: flex;
+  border-radius: calc(var(--default-radius) + 2px);
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.0625);
+  width: 60%;
+  justify-content: space-evenly;
+  margin-top: 30px;
+}
+
+/* 
+ * Slide-Show CSS
+*/
+
+.slideshow-container {
+  max-width: 900px;
+  width: 90%;
+  height: 350px;
+  position: relative;
+  margin: auto;
+}
+
+.mySlides {
+  display: none;
+}
+
+
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+/* 
+  * Slide-Show End 
+*/
+
+/* ----------------------------------------------
+ * Generated by Animista on 2023-2-13 20:18:18
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation fade-in-top
+ * ----------------------------------------
+ */
+ @-webkit-keyframes fade-in-top {
+  from {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes fade-in-top {
+  from {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+
+
+@media screen and (min-width: 1600px) {
+  .service_div {
+    margin-top: 190px;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .value {
+    grid-template-columns: 250px 250px;
+    width: 60%;
+  }
+
+  .index-select {
+    height: 40px;
+  }
+
+  .container-component3 {
+    padding: 5vh 2vw 20vh;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  
+  .container-component1 {
+    height: 1050px;
+  }
+
+  .service_div {
+    flex-direction: column;
+    height: auto;
+    width: 90%;
+    gap: 1rem;
+  }
+
+  .index-heading {
+    font-size: 7vw;
+  }
+
+  .index-semi-heading {
+    font-size: 2.5vw;
+  }
+
+  .company-info {
+    min-height: 620px;
+  }
+
+  .company-info {
+    flex-direction: column;
+  }
+
+  .company-info-1 {
+    width: 100%;
+  }
+
+  .company-info-2 {
+    width: 100%;
+  }
+
+  .company-info-3 {
+    width: 100%;
+  }
+
+  .company-info-video {
+    max-width: 100%;
+  }
+
+  #ceo_img {
+    width: 400px;
+    height: 400px;
+  }
+
+  .value {
+    grid-template-columns: 250px 250px;
+    width: 90%;
+  }
+
+  .multi-button {
+    width: 100%;
+  }
+
+  .index-select {
+    height: 45px;
+  }
+
+  .slideshow-container {
+    height: 300px;
+  }
+  
+}
+
+@media screen and (max-width: 650px) {
+  .value {
+    grid-template-columns: 250px;
+    justify-content: center;
+    justify-items: center;
+    width: 90%;
+  }
+
+  .slideshow-container {
+    height: 250px;
+  }
+
+}
+
+@media screen and (max-width: 500px) {
+
+  .index-heading {
+    font-size: 8vw;
+  }
+
+  .index-semi-heading {
+    font-size: 3vw;
+  }
+
+  .container-component3 {
+    padding: 5vh 2vw 0vh;
+  }
+
+  .company-info-1 {
+    width: 100%;
+  }
+
+  .company-info-2 {
+    max-width: 100%;
+  }
+
+  #ceo_img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .multi-button {
+    width: 100%;
+  }
+
+  .container-component2 button {
+    font-size: 10px;
+  }
+
+  .index-select {
+    height: 40px;
+  }
+
+  .ceo-statment {
+    font-size: 16px;
+  }
+
+  .slideshow-container {
+    height: 200px;
+  }
+}

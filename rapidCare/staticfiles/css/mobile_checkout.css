@@ -1,0 +1,41 @@
+@media screen and (max-width: 576px) {
+  .address-container {
+    width: 100%;
+    z-index: 2;
+  }
+
+  .payment-container {
+    width: 100%;
+  }
+
+  .checkout-container.right-panel-active .payment-container {
+    transform: translateX(0%);
+  }
+
+  .iphone {
+    inline-size: 90%;
+    overflow: hidden;
+  }
+
+  .paymentForm {
+    padding: 0;
+  }
+
+  .checkout-container.right-panel-active {
+    height: 1200px;
+  }
+
+  .iphone {
+    block-size: 1200px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .checkout-container.right-panel-active {
+    height: 1100px;
+  }
+
+  .iphone {
+    block-size: 1100px;
+  }
+}
