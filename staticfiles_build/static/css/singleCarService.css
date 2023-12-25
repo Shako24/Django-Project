@@ -1,0 +1,283 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bree+Serif&family=EB+Garamond:ital,wght@0,500;1,800&display=swap");
+
+#container {
+  box-shadow: 0 15px 30px 1px grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.9);
+  text-align: start;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 30px 0 0 20px;
+  min-height: 200px;
+  width: 70vw;
+}
+
+#container .product-details h1 {
+  font-family: "Bebas Neue", cursive;
+  display: inline-block;
+  position: relative;
+  /* font-size: 30px; */
+  color: #344055;
+  margin: 0;
+}
+
+#container .product-details h1:before {
+  position: absolute;
+  content: "";
+  right: 0%;
+  top: 0%;
+  transform: translate(25px, -15px);
+  font-family: "Bree Serif", serif;
+  display: inline-block;
+  background: #ffe6e6;
+  border-radius: 5px;
+  /* font-size: 14px; */
+  padding: 5px;
+  color: white;
+  margin: 0;
+  animation: chan-sh 6s ease infinite;
+}
+
+#container .product-details .row .col {
+  height: 100%;
+}
+
+.hint-star {
+  display: inline-block;
+  margin-left: 0.5em;
+  color: gold;
+  width: 100%;
+}
+
+#container .product-details > p {
+  font-family: "EB Garamond", serif;
+  text-align: left;
+  font-size: 18px;
+  color: #7d7d7d;
+}
+/* .control {
+  position: absolute;
+  bottom: 5vh;
+} */
+.cwsh-btn {
+  /* transform: translateY(0px); */
+  height: 70px;
+  width: 200px;
+  transition: 0.3s linear;
+  background: rgb(119, 0, 0);
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  color: #eee;
+  padding: 0;
+  margin: 0;
+  bottom: 0;
+}
+
+.cwsh-btn:hover {
+  /* transform: translateY(-3px); */
+  background: red;
+}
+
+.remove {
+  /* transform: translateY(0px); */
+  height: 70px;
+  width: 200px;
+  transition: 0.3s linear;
+  background: rgb(119, 0, 0);
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  color: #eee;
+  padding: 0;
+  margin: 0;
+  bottom: 0;
+}
+
+.remove:hover {
+  /* transform: translateY(-3px); */
+  background: red;
+}
+
+.product-img {
+height: 350px;
+}
+
+#container img {
+  width: 100%;
+  height: 90%;
+  border-radius: 10px;
+}
+
+.info {
+  background: rgba(27, 26, 26, 0.9);
+  font-family: "Bree Serif", serif;
+  transition: all 0.3s ease-out;
+  transform: translateX(-100%);
+  position: absolute;
+  line-height: 1.8;
+  text-align: left;
+  font-size: 105%;
+  cursor: no-drop;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  padding-top: 5%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.serviceSelect {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  display: none;
+}
+
+.serviceSelect:active {
+  opacity: 1;
+  height: auto;
+}
+
+.serviceSelectItem {
+  display: flex;
+  flex-direction: row;
+}
+
+.serviceSelectItem input {
+  height: 2em;
+  width: 2em;
+  text-align: center;
+  margin-left: 2px;
+  margin-right: 2px;
+  pointer-events: none;
+}
+
+.service-info {
+  display: flex;
+  width: 52%;
+  flex-direction: column;
+}
+
+.car-type {
+  font-weight: bold;
+}
+
+.serviceNumber {
+  width: 50px;
+  outline: none;
+  background-color: white;
+}
+
+.serviceNumber-left {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.serviceNumber-right {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.serviceCounter {
+  display: flex;
+  align-items: center;
+}
+
+.serviceCounter input {
+  border: none;
+}
+
+
+
+@media screen and (min-width: 75em) {
+  .control {
+    position: absolute;
+    bottom: 2vh;
+  }
+}
+
+/* Testing Css */
+
+.product-details-1 {
+  position: relative;
+  text-align: left;
+  overflow: hidden;
+  height: 80%;
+  width: 100%;
+}
+
+.service_detail-1 {
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  padding: 30px;
+  width: 50%;
+  float: left;
+}
+
+.product-image {
+  width: 50%;
+  height: 400px;
+  float: right;
+  padding: 3%;
+}
+
+.control-1 {
+  display: flex;
+  margin-top: auto;
+  justify-content: flex-start;
+}
+
+.addDiv {
+  position: absolute;
+}
+
+@media screen and (max-width: 767.98px) {
+  #container {
+    width: 90vw;
+  }
+  #container h1 {
+    font-size: 4vw;
+    font-weight: bolder;
+  }
+
+  .product-details-1 {
+    height: 400px;
+  }
+  .service_detail-1 {
+    float: none;
+    width: 100%;
+    height: 10vh;
+    padding: 0 3% 0;
+    margin-bottom: 3%;
+  }
+  .product-image {
+    float: none;
+    width: 100%;
+    height: 200px;
+    padding: 3% 3% 1%;
+  }
+
+}
+
+@media screen and (max-width: 992px ) {
+  .product-img {
+    height: 200px;
+  }
+
+  .addDiv {
+    position: relative;
+  }
+
+}
