@@ -36,3 +36,4 @@ sqlparse==0.4.3
 tzdata==2022.7
 tzlocal==4.2
 urllib3==1.26.14
+db-sqlite3
